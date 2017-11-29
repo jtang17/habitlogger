@@ -92,7 +92,7 @@ const getUserHabits = (user, cb) => {
   });
 };
 
-const getHabitData = (user, habit, cb) => {  
+const getHabitData = (user, habit, cb) => {
   User.findOne({username: user}, (err, userEntry) => {
     if (err) {
       console.error(`Error getting ${user}'s habits.`);
@@ -100,7 +100,7 @@ const getHabitData = (user, habit, cb) => {
     // Iterate over the user's habits and return the target habit.
     let targetHabit = userEntry.habits.filter(habitEntry => habitEntry.habit === habit).pop();
     targetHabit.occurrences.sort(sortByDate); // The client expects sorted occurrences.
-    
+
     if (targetHabit) {
       cb(targetHabit);
     } else {
@@ -114,8 +114,8 @@ const createHabit = (habitData, cb) => {
     if (err) {
       console.error(`Error getting ${habitData.username}.`);
     }  else {
-      userEntry.habitList.push(habitData.habit); 
-      userEntry.habits.push({ 
+      userEntry.habitList.push(habitData.habit);
+      userEntry.habits.push({
         habit: habitData.habit,
         limit: habitData.limit,
         unit: habitData.unit,
