@@ -17,6 +17,7 @@ class DataLogger extends React.Component {
     this.logChange = this.logChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleQuantityChange = this.handleQuantityChange.bind(this);
+    this.checkDupe = this.checkDupe.bind(this);
   }
 
   // used to have 'Select Habit' placeholder text in drop down menu on mount
@@ -41,25 +42,45 @@ class DataLogger extends React.Component {
     });
   }
 
+  /*
+    Uses timestamps to check if a log/entry is a duplicate.
+    We don't want more than one log to have the same date
+    because it messes up the chart.
+  */
+  checkDupe() {
+    let occurrences = this.props.occurrences;
+    let habit = this.state.currentHabit;
+    let time = JSON.parse(JSON.stringify(this.state.habitTime));
+    let quantity = this.state.quantity;
+    let found = false;
+
+    occurrences.forEach(item => {
+      if (item.timestamp.slice(0, 10) === time.slice(0, 10)) {
+        found = true;
+      } else {
+        this.props.logHabit(habit, time, quantity);
+      }
+    });
+
+    alert('Please make any updates to existing logs by updating your table');
+  }
+
   render() {
     return (
       <div className="dataLogger">
-      <h1>Data Logger</h1>
+        <h1>Data Logger</h1>
         <SelectField
           floatingLabelText="Select Habit"
           value={this.state.value}
-          onChange={this.logChange}
-        >
+          onChange={this.logChange}>
           {this.props.habits.map((event, index)=>{
             return <MenuItem key={index} value={index} primaryText={event} />
           })}
         </SelectField>
         <br />
-        <label>Click Date to Select Different Date: </label>
-        <DatePicker autoOk={true} hintText="Enter day of Habit" container="inline" mode="landscape" value={this.state.habitTime} onChange={(x, day) => this.handleDateChange(x,day)} />
-          <input type="number" onChange={this.handleQuantityChange} />
-          <button onClick={this.props.logHabit.bind(this, this.state.currentHabit, this.state.habitTime, this.state.quantity)} >Log Habit</button>
-        <hr />
+        <DatePicker autoOk={true} hintText="Select Date" container="inline" mode="landscape" value={this.state.habitTime} onChange={(x, day) => this.handleDateChange(x,day)} />
+        <input type="number" onChange={this.handleQuantityChange} />
+        <button onClick={this.checkDupe} >Log Habit</button>
       </div>
     )
   }

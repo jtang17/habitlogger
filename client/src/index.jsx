@@ -213,7 +213,10 @@ class App extends React.Component {
                 <EventCreator createHabit={this.createHabit} />
               </MuiThemeProvider>
               <MuiThemeProvider>
-                <DataLogger habits={this.state.habits} getHabitsInfo={this.getHabitsInfo.bind(this)} logHabit={this.logHabit} />
+                <DataLogger habits={this.state.habits}
+                            occurrences={this.state.occurrences}
+                            getHabitsInfo={this.getHabitsInfo.bind(this)}
+                            logHabit={this.logHabit} />
               </MuiThemeProvider>
               <MuiThemeProvider>
                 <EventSelector habits={this.state.habits} selectHabit={this.selectHabit}/>
