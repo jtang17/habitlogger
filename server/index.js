@@ -117,6 +117,17 @@ app.post('/api/:username/log', checkLoginAuthStatus, (req, res) => {
   });
 });
 
+// recieve a put request
+  // the put request has a req and body object send the req.body object to the
+  // db function that will search and update the log occurance
+  // db.updateLog(req.body, (occurance) => {
+    // return something to the client
+  // })
+app.put('/updateLog', checkLoginAuthStatus, (req, res) => {
+  db.updateLog(req.body, (output) => {
+    console.log('checking if it went through', output);
+  })
+})
 
 app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);
