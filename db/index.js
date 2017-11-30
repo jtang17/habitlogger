@@ -200,6 +200,43 @@ const updateLog = (log, cb) => {
 
 }
 
+const deleteLog = (log, cb) => {
+  // find the user
+  User.findOne({username: log.username}, (err, userEntry) => {
+    if (err) {
+      console.log('Error finding user in deleteLogFunction: ', err);
+    } else {
+      // find the habit
+      let habitToUpdate = userEntry.habits
+      let habitLogToDelete;
+      // loop through the occurances of that habit
+      habitToUpdate.forEach((habit) => {
+        if (habit.habit === log.viewHabit) {
+          habitLogToDelete = habit
+        }
+      });
+      // find the occurance with timestamp
+      habitLogToDelete.forEach((occurance, i) => {
+        if (JSON.stringify(occurance.timeframe).indexOf(log.timeframe) > -1) {
+          // remove that occurance
+          habitLogToDelete.splice(i, 1);
+        }
+      })
+      // save the userEntry
+      userEntry.save((err) => {
+      // return callback of true or false
+        if (err) {
+          cb(err);
+        } else {
+          cb(true);
+        }
+      })
+
+    }
+
+  });
+}
+
 // EXPORTS
 module.exports.signup = signup;
 module.exports.verifyLogin = verifyLogin;
@@ -208,3 +245,4 @@ module.exports.getHabitData = getHabitData;
 module.exports.createHabit = createHabit;
 module.exports.logOccurrence = logOccurrence;
 module.exports.updateLog = updateLog;
+module.exports.deleteLog = deleteLog;
