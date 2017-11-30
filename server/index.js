@@ -37,8 +37,10 @@ app.post('/signup', (req, res) => {
   // {username:'stone', password:'sand'}
   db.signup(req.body, (username) => {
     if (username){
-      req.session.user = username;
-      res.send(username);
+      req.session.regenerate( () => {
+        req.session.user = username;
+        res.send(username);
+      });
     } else { // User already exists.
       res.send(null);
     }
@@ -72,6 +74,15 @@ app.get('/logout', (req, res) => {
     res.send(true);
   });
 });
+
+app.get('/checkSession', (req, res) => {
+  if (req.session) {
+    res.send(req.session.user);
+  } else {
+    res.send(false);
+  }
+});
+
 app.get('/users/:username', checkLoginAuthStatus, (req, res) => {
   // Get the user's list of habits.
   // Used to field selectors on client.
