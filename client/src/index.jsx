@@ -35,6 +35,7 @@ class App extends React.Component {
   login(username, password) {
     axios.post('/login', {username: username, password: password})
       .then((res) => {
+        console.log('cliend index.js login');
         console.log(res.data);
         if (res.data) {
           this.setState({username: res.data});
@@ -71,6 +72,7 @@ class App extends React.Component {
   logout() {
     axios.get('/logout')
       .then((res) => {
+        console.log('response: ', res);
         this.setState({
           habits: [],
           username: null,
@@ -86,7 +88,7 @@ class App extends React.Component {
   // retrieve user's habits and set as state for other components
   getUserData() {
     let username = this.state.username;
-    axios.get(`/${username}`)
+    axios.get(`/users/${username}`)
       .then((res) => {
         this.setState({
           habits: res.data,
