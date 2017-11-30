@@ -57,12 +57,14 @@ class DataLogger extends React.Component {
     occurrences.forEach(item => {
       if (item.timestamp.slice(0, 10) === time.slice(0, 10)) {
         found = true;
-      } else {
-        this.props.logHabit(habit, time, quantity);
       }
     });
 
-    alert('Please make any updates to existing logs by updating your table');
+    if (found) {
+      alert('Please make any updates to existing logs by updating your table');
+    } else {
+      this.props.logHabit(habit, time, quantity);
+    }
   }
 
   render() {
