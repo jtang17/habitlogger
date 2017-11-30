@@ -9,14 +9,25 @@ class Chart extends React.Component {
       labels : this.compileEntryLabels(this.sortDates()),
       data : this.compileEntryValues(this.sortDates()),
       unit : this.props.unit,
+      timeframe: 0
     };
+    this._maxDate;
+    this._minDate;
     this._options = {
       scales: {
         yAxes: [{
           ticks: {
             beginAtZero: true,
           }
-        }]
+        }],
+        xAxes: [{
+          type: 'linear',
+          ticks: {
+             suggestedMin: 0,
+             suggestedMax: this._maxDate,
+             stepSize: this._maxDate / 10 //interval between ticks
+          }
+       }]
       }
     };
     this.compileEntryLabels = this.compileEntryLabels.bind(this);
@@ -49,12 +60,27 @@ class Chart extends React.Component {
 
   // getting data to be displayed on chart (Y Axis)
   compileEntryValues(entries) {
+    let day1 = undefined;
+    let xDay = undefined;
+    let timeframe = 0;
+    const dayInMill = 24 * 3600 * 1000;
     entries = this.getLastXOccurrences(entries);
 
     let arr = entries.map((entry) => {
-      return entry.value;
+      if (!day1) {
+        day1 = Date.parse(entry.timestamp);
+        xDay = 0;
+      } else {
+        xDay = (Date.parse(entry.timestamp) - day1) / dayInMill;
+      }
+      if (!timeframe || xDay > timeframe) {
+        this._maxDay = Math.round(xDay);
+      }
+      return { x: xDay, y: entry.value };
     });
-    console.log(arr);
+    this.setState({
+      timeframe: timeframe
+    });
     return arr;
   }
 
@@ -69,7 +95,7 @@ class Chart extends React.Component {
   setData (lab,dat,uni) {
     this.setState(  {data:
                      {
-                       labels: lab,
+                       // labels: lab,
                        datasets: [
                          {
                            label: uni,
@@ -99,7 +125,7 @@ class Chart extends React.Component {
   render() {
     return (
       <div id="chart">
-        <h3>{this.props.viewHabit} over the past 15 {this.props.timeframe}</h3>
+        <h3>{this.props.habit} over the past {this._maxDay} days</h3>
         <Line data={this.state.data} options={this._options}/>
       </div>
     );

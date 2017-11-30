@@ -65,7 +65,7 @@ class EventCreator extends React.Component{
         <Divider />
         <TextField hintText="Habit units" style={style} underlineShow={false} onChange={this.unitsChange} />
         <Divider />
-        <TextField type="number" hintText="Goal/Limit" style={style} underlineShow={false} onChange={this.limitChange}/>
+        <TextField type="number" hintText="Goal" style={style} underlineShow={false} onChange={this.limitChange}/>
         <Divider />
       </Paper>
         <SelectField
