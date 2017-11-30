@@ -160,6 +160,46 @@ const logOccurrence = (logData, cb) => {
   });
 };
 
+const updateLog = (log, cb) => {
+  // input req body and the cb
+  // output a response that it has been updated
+  // receieve the username and viewHabit and timeStamp of the habit and value
+  // search for the user
+  User.findOne({username: log.username}, (err, userEntry) => {
+    if (err) {
+      console.log('Error in updateLog, check index.js-db', err)
+    } else {
+      // if the user is found
+      let habitsOfUser = userEntry.habits
+    // loop through the habits and find the occurance
+      let habitToUpdate;
+      habitsOfUser.forEach((habit) => {
+        if (habit.habit === log.viewHabit) {
+          habitToUpdate = habit;
+        }
+      })
+      // loop through the occuranes
+      habitToUpdate.occurrences.forEach((occurance) => {
+        // check if the timestamp equals our new timestamp
+        if (JSON.stringify(occurance.timeframe).indexOf(log.timeframe) > -1) {
+          // if it does then make our value = our new value
+          occurance.value = log.value;
+        }
+      });
+      // save the userEntry and return the callback
+      userEntry.save((err) => {
+        if (err) {
+          cb(err);
+        } else {
+          cb(true);
+        }
+      });
+
+    }
+  })
+
+}
+
 // EXPORTS
 module.exports.signup = signup;
 module.exports.verifyLogin = verifyLogin;
@@ -167,3 +207,4 @@ module.exports.getUserHabits = getUserHabits;
 module.exports.getHabitData = getHabitData;
 module.exports.createHabit = createHabit;
 module.exports.logOccurrence = logOccurrence;
+module.exports.updateLog = updateLog;
