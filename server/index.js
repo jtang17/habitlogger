@@ -74,6 +74,15 @@ app.get('/logout', (req, res) => {
     res.send(true);
   });
 });
+
+app.get('/checkSession', (req, res) => {
+  if (req.session) {
+    res.send(req.session.user);
+  } else {
+    res.send(false);
+  }
+});
+
 app.get('/users/:username', checkLoginAuthStatus, (req, res) => {
   // Get the user's list of habits.
   // Used to field selectors on client.

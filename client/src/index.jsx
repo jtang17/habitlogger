@@ -38,8 +38,10 @@ class App extends React.Component {
         console.log('cliend index.js login');
         console.log(res.data);
         if (res.data) {
-          this.setState({username: res.data});
-          this.getUserData();
+          this.setState({
+            username: res.data}, function() {
+              this.getUserData();
+            });
         } else {
           alert('Incorrect Credentials');
         }
@@ -175,6 +177,23 @@ class App extends React.Component {
       viewHabit: habitName,
     });
     this.getHabitsInfo(habitName);
+  }
+
+  componentDidMount() {
+    let that = this;
+    axios.get('/checkSession')
+    .then((res) => {
+      if (res.data) {
+        this.setState({
+          username: res.data
+        }, function() {
+          this.getUserData();
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   // all MUI components must be wrapped by MuiThemeProvider
