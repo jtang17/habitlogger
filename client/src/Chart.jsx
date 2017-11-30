@@ -5,9 +5,31 @@ import moment from 'moment';
 class Chart extends React.Component {
   constructor(props) {
     super(props);
-    this._maxDay;
-    this._options;
-    this.data;
+    this.state = {
+      labels : this.compileEntryLabels(this.sortDates()),
+      data : this.compileEntryValues(this.sortDates()) || '',
+      unit : this.props.unit,
+      timeframe: 0
+    };
+    this._maxDate;
+    this._minDate;
+    this._options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+          }
+        }],
+        xAxes: [{
+          type: 'linear',
+          ticks: {
+             suggestedMin: 0,
+             suggestedMax: this._maxDate,
+             stepSize: this._maxDate / 10 //interval between ticks
+          }
+       }]
+      }
+    };
     this.compileEntryValues = this.compileEntryValues.bind(this);
   }
 
