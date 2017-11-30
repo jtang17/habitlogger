@@ -78,9 +78,6 @@ class Chart extends React.Component {
       }
       return { x: xDay, y: entry.value };
     });
-    this.setState({
-      timeframe: timeframe
-    });
     return arr;
   }
 
