@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(session({
   secret: 'lss*739md9d@#ksz0)',
   saveUninitialized: true,
-  resave: false,
+  resave: true,
 }));
 
 // HELPERS
@@ -48,22 +48,31 @@ app.post('/signup', (req, res) => {
 app.post('/login', (req, res) => {
   // Expects a JSON from the client.
   // {username:'stone', password:'sand'}
-  let isLoggedIn = req.session ? !!req.session.user : false;
-  if (!isLoggedIn) {
+  // console.log('req.session: ',req.session);
+  // let isLoggedIn = req.session ? !!req.session.user : false;
+  // console.log('isLoggedIn: ', isLoggedIn);
+  // if (!isLoggedIn) {
     db.verifyLogin(req.body, (correctCredentials) => {
       if (correctCredentials) {
         req.session.user = req.body.username;
-        res.send(req.session.user); 
+        res.send(req.session.user);
       } else {
-        res.send(null); 
+        res.send(null);
       }
     });
-  } else { // User already logged in.
-    res.redirect('/');
-  }
+  // } else { // User already logged in.
+  //   res.redirect('/');
+  // }
 });
 
-app.get('/:username', checkLoginAuthStatus, (req, res) => {
+app.get('/logout', (req, res) => {
+  console.log('session destroyed');
+  req.session.destroy(() => {
+    console.log('session here : ', req.session);
+    res.send(true);
+  });
+});
+app.get('/users/:username', checkLoginAuthStatus, (req, res) => {
   // Get the user's list of habits.
   // Used to field selectors on client.
   db.getUserHabits(req.params.username, (habitList) => {
@@ -97,11 +106,6 @@ app.post('/api/:username/log', checkLoginAuthStatus, (req, res) => {
   });
 });
 
-app.get('/logout', (req, res) => {
-  req.session.destroy(() => {
-    res.redirect('/');
-  });
-});
 
 app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);

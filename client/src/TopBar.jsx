@@ -31,7 +31,7 @@ class DefaultMenu extends React.Component {
 
   render() {
     return (
-      <FlatButton style={{color: 'white'}} label="Signout" onClick={this.props.logout.bind(this)} />
+      <FlatButton style={{color: 'white'}} label="Signout" onClick={this.props.logout} />
     );
   }
 }
