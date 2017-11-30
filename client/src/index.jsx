@@ -70,6 +70,7 @@ class App extends React.Component {
   }
 
   logout() {
+    console.log('inside logout function', this);
     axios.get('/logout')
       .then((res) => {
         console.log('response: ', res);

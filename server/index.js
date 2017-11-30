@@ -37,8 +37,10 @@ app.post('/signup', (req, res) => {
   // {username:'stone', password:'sand'}
   db.signup(req.body, (username) => {
     if (username){
-      req.session.user = username;
-      res.send(username);
+      req.session.regenerate( () => {
+        req.session.user = username;
+        res.send(username);
+      });
     } else { // User already exists.
       res.send(null);
     }
