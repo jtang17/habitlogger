@@ -124,21 +124,34 @@ app.post('/api/:username/log', checkLoginAuthStatus, (req, res) => {
     // return something to the client
   // })
 app.put('/updateLog', (req, res) => {
-  db.updateLog(req.body, (output) => {
+  console.log(req.body);
+  db.updateLog(req.body, (err, output) => {
     console.log('checking if it went through', output);
-    res.send(output);
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(output);
+    }
   })
 })
 
 app.delete('/deleteLog', (req, res) => {
-  db.deleteLog(req.body, (output) => {
-    res.send(output)
+  db.deleteLog(req.body, (err, output) => {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(output)
+    }
   })
 })
 
 app.delete('/deleteHabit', (req, res) => {
-  db.deleteHabit(req.body, (output) => {
-    res.send(output)
+  db.deleteHabit(req.body, (err, output) => {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(output)
+    }
   })
 })
 

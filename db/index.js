@@ -158,9 +158,10 @@ const findUser = (log, cb) => {
   User.findOne({username: log.username}, (err, userEntry) => {
     if (err) {
       console.log('error finding user: ', err);
+      cb(err, null)
     } else {
       // console.log('user is found!!!!!!', userEntry)
-      cb(userEntry);
+      cb(err, userEntry);
     }
   })
 }
@@ -181,15 +182,16 @@ const findHabit = (userEntry, view, cb) => {
 }
 
 const isSameTime = (dbTime, clientTime) => {
+  // string time stamps
   let stringDbTime = JSON.stringify(dbTime);
   let stringClientTime = JSON.stringify(clientTime);
-
+  // find the index of where T begins
   let findDbT = stringDbTime.indexOf('T');
   let findClientT = stringClientTime.indexOf('T');
-
+  // make timestamps comparable
   let dbTimestamp = stringDbTime.slice(1, findDbT);
   let clientTimestamp = stringClientTime.slice(1, findClientT);
-
+  // check if the equal
   if (clientTimestamp === dbTimestamp) {
     return true;
   } else {
@@ -199,7 +201,7 @@ const isSameTime = (dbTime, clientTime) => {
 
 const updateLog = (log, cb) => {
   // search for the user
-  findUser(log, (userEntry) => {
+  findUser(log, (err, userEntry) => {
     // loop through the habits and find the occurance
     findHabit(userEntry, log.viewHabit, (habitToUpdate) => {
       // loop through the occuranes
@@ -212,9 +214,9 @@ const updateLog = (log, cb) => {
       // save the userEntry and return the callback
       userEntry.save((err) => {
         if (err) {
-          cb(err);
+          cb(err, null);
         } else {
-          cb(true);
+          cb(err, true);
         }
       });
     });
@@ -224,7 +226,7 @@ const updateLog = (log, cb) => {
 
 const deleteLog = (log, cb) => {
   // find the user
-  findUser(log, (userEntry) => {
+  findUser(log, (err, userEntry) => {
     findHabit(userEntry, log.viewHabit, (habitToUpdate) => {
       // loop through the occurances
       habitToUpdate.occurrences.forEach((occurrence, i) => {
@@ -237,9 +239,9 @@ const deleteLog = (log, cb) => {
       userEntry.save((err) => {
       // return callback of true or false
         if (err) {
-          cb(err);
+          cb(err, null);
         } else {
-          cb(true);
+          cb(err, true);
         }
       });
     });
@@ -248,10 +250,9 @@ const deleteLog = (log, cb) => {
 
 const deleteHabit = (log, cb) => {
   // find the user
-  findUser(log, (userEntry) => {
+  findUser(log, (err, userEntry) => {
     findHabit(userEntry, log.viewHabit, (habitToUpdate) => {
       // if habit is found delete it
-      console.log('this is the habitToUpdate!!!', habitToUpdate)
       userEntry.habits.forEach((habit, i) => {
 
         if (habit.habit === habitToUpdate.habit) {
@@ -266,9 +267,9 @@ const deleteHabit = (log, cb) => {
       })
       userEntry.save((err) => {
         if(err) {
-          cb(err)
+          cb(err, null)
         } else {
-          cb(true);
+          cb(err, true);
         }
       });
     });
