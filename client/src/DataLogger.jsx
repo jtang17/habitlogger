@@ -103,6 +103,7 @@ class DataLogger extends React.Component {
         <br />
 
         <RaisedButton label="Log!" primary={true} onClick={this.checkDupe} />
+        <RaisedButton label="Create new habit" primary={true} onClick={this.props.changeCreateHabitView} />
       </div>
     )
   }

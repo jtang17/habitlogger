@@ -21,6 +21,7 @@ class App extends React.Component {
       viewData: false,
       viewHabit: '',
       errorText: '',
+      createHabitView: false
     }
     this.login = this.login.bind(this);
     this.signup = this.signup.bind(this);
@@ -31,6 +32,7 @@ class App extends React.Component {
     this.createHabit = this.createHabit.bind(this);
     this.selectHabit = this.selectHabit.bind(this);
     this.checkFields = this.checkFields.bind(this);
+    this.changeCreateHabitView = this.changeCreateHabitView.bind(this);
   }
 
   login(username, password) {
@@ -193,9 +195,26 @@ class App extends React.Component {
       console.log(err);
     });
   }
+  changeCreateHabitView() {
+    const newView = !this.state.createHabitView
+    this.setState({
+      createHabitView: newView
+    });
+  }
 
   // all MUI components must be wrapped by MuiThemeProvider
   render() {
+    let habitCreateOrDataLogger;
+    if (this.state.createHabitView) {
+      habitCreateOrDataLogger = <EventCreator createHabit={this.createHabit} changeCreateHabitView={this.changeCreateHabitView} />
+    } else {
+      habitCreateOrDataLogger = <DataLogger habits={this.state.habits}
+                            occurrences={this.state.occurrences}
+                            errorText={this.state.errorText}
+                            getHabitsInfo={this.getHabitsInfo.bind(this)}
+                            logHabit={this.logHabit}
+                            changeCreateHabitView={this.changeCreateHabitView} />
+    }
     return (
       <div className="container-fluid">
         <MuiThemeProvider>
@@ -208,15 +227,9 @@ class App extends React.Component {
           <div className="main">
             <div className="row rowA">
               <MuiThemeProvider>
-                <EventCreator createHabit={this.createHabit} />
+                {habitCreateOrDataLogger}
               </MuiThemeProvider>
-              <MuiThemeProvider>
-                <DataLogger habits={this.state.habits}
-                            occurrences={this.state.occurrences}
-                            errorText={this.state.errorText}
-                            getHabitsInfo={this.getHabitsInfo.bind(this)}
-                            logHabit={this.logHabit} />
-              </MuiThemeProvider>
+
               <MuiThemeProvider>
                 <EventSelector habits={this.state.habits} selectHabit={this.selectHabit}/>
               </MuiThemeProvider>

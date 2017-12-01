@@ -4,52 +4,34 @@ import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class EventCreator extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      timeframes: ['Day', 'Week', 'Month'],
       currentTimeframe : 'Day',
       event: '',
       units: '',
       limit: '',
       value: 0,
     }
-    this.timeFrameChange = this.timeFrameChange.bind(this);
-    this.eventChange = this.eventChange.bind(this);
-    this.unitsChange = this.unitsChange.bind(this);
-    this.limitChange = this.limitChange.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this._timeframes = ['Day', 'Week', 'Month'];
+    this.changeTimeframe = this.changeTimeframe.bind(this);
+    this.elementChange = this.elementChange.bind(this);
   }
 
-  timeFrameChange(e) {
-    this.setState({ currentEvent: `${e.label}` });
-  }
-
-  eventChange(e) {
+  elementChange(e) {
     this.setState({
-      event: e.target.value,
-    });
-  }
-
-  unitsChange(e) {
-    this.setState({
-      units: e.target.value,
-    });
-  }
-
-  limitChange(e) {
-    this.setState({
-      limit: e.target.value,
-    });
+      [e.target.name]: e.target.value
+    })
   }
 
   // for SelectField drop down change and select handling
-  handleChange(e, index) {
+  changeTimeframe(e, index) {
     this.setState({
       value: index,
-      currentTimeframe: this.state.timeframes[index],
+      currentTimeframe: this._timeframes[index],
     });
   }
 
@@ -61,29 +43,28 @@ class EventCreator extends React.Component{
       <div className="eventCreator">
       <h1>Habit Creator</h1>
       <Paper zDepth={1} style={{width: '50%'}}>
-        <TextField hintText="Habit name" style={style} underlineShow={false} onChange={this.eventChange} />
+        <TextField hintText="Habit name" style={style} underlineShow={false} onChange={this.elementChange} name="event"/>
         <Divider />
-        <TextField hintText="Habit units" style={style} underlineShow={false} onChange={this.unitsChange} />
+        <TextField hintText="Habit units" style={style} underlineShow={false} onChange={this.elementChange} name="units"/>
         <Divider />
-        <TextField type="number" hintText="Goal" style={style} underlineShow={false} onChange={this.limitChange}/>
+        <TextField type="number" hintText="Goal" style={style} underlineShow={false} onChange={this.elementChange} name="limit"/>
         <Divider />
       </Paper>
         <SelectField
           floatingLabelText="Choose Timeframe"
           value={this.state.value}
-          onChange={this.handleChange}
+          onChange={this.changeTimeframe}
         >
-        {this.state.timeframes.map((timeframe, index) =>
+        {this._timeframes.map((timeframe, index) =>
           <MenuItem key={index} value={index} primaryText={timeframe} />
         )}
 
         </SelectField>
         <br />
         <br />
-        <button
-          onClick={this.props.createHabit.bind(this, this.state.event, this.state.units, this.state.limit, this.state.currentTimeframe) }>
-          Create Habit
-        </button>
+        <RaisedButton label="Create Habit" primary={true} onClick={this.props.createHabit.bind(this, this.state.event, this.state.units, this.state.limit, this.state.currentTimeframe) } />
+
+        <RaisedButton label="Log Data" primary={true} onClick={this.props.changeCreateHabitView} />
         <hr />
       </div>
     )
