@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const UpdateDelete = ({ quantity, handleModify, updateQuantity }) => {
+const UpdateDelete = ({ quantity, updateQuantity, handleUpdateClick }) => {
   return (
     <div>
       <TextField type="number"
@@ -11,11 +11,11 @@ const UpdateDelete = ({ quantity, handleModify, updateQuantity }) => {
                  onChange={updateQuantity} />
       <RaisedButton label="Update"
                     primary={true}
-                    onClick={handleModify} />
+                    onClick={handleUpdateClick} />
       &nbsp;OR&nbsp;
       <RaisedButton label="Delete"
                     primary={true}
-                    onClick={handleModify} />
+                    onClick={handleUpdateClick} />
     </div>
   )
 }
