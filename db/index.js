@@ -257,6 +257,11 @@ const deleteHabit = (log, cb) => {
         if (habit.habit === habitToUpdate.habit) {
           console.log('if this equals im in!')
           userEntry.habits.splice(i, 1);
+          for (var i = 0; i < userEntry.habitList.length; i++) {
+            if (userEntry.habitList[i] === habit.habit) {
+              userEntry.habitList.splice(i, 1);
+            }
+          }
         }
       })
       userEntry.save((err) => {
