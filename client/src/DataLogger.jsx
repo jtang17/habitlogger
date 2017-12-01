@@ -2,7 +2,9 @@ import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
+import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class DataLogger extends React.Component {
   constructor(props) {
@@ -12,6 +14,7 @@ class DataLogger extends React.Component {
       habitTime: new Date(),
       quantity: '',
       value: 0,
+      errorText: '',
     };
     this.habitChange = this.habitChange.bind(this);
     this.dateChange = this.dateChange.bind(this);
@@ -55,6 +58,7 @@ class DataLogger extends React.Component {
     let found = false;
 
     occurrences.forEach(item => {
+      console.log(item.timestamp.slice(0, 10), time.slice(0, 10));
       if (item.timestamp.slice(0, 10) === time.slice(0, 10)) {
         found = true;
       }
@@ -76,8 +80,9 @@ class DataLogger extends React.Component {
         <SelectField
           floatingLabelText="Select Habit"
           value={this.state.value}
+          errorText={this.props.errorText}
           onChange={this.habitChange}>
-          {this.props.habits.map((event, index)=>{
+          {this.props.habits.map( (event, index) => {
             return <MenuItem key={index} value={index} primaryText={event} />
           })}
         </SelectField>
@@ -88,11 +93,16 @@ class DataLogger extends React.Component {
                     container="inline"
                     mode="landscape"
                     value={this.state.habitTime}
-                    onChange={(x, day) => this.dateChange(x,day)} />
+                    onChange={ (x, day) => this.dateChange(x,day) } />
 
-        <input type="number" onChange={this.quantityChange} />
+        <TextField type="number"
+                   min="0"
+                   hintText="How many?"
+                   errorText={this.props.errorText}
+                   onChange={this.quantityChange} />
+        <br />
 
-        <button onClick={this.checkDupe} >Log Habit</button>
+        <RaisedButton label="Log!" primary={true} onClick={this.checkDupe} />
       </div>
     )
   }

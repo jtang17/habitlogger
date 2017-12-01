@@ -20,6 +20,7 @@ class App extends React.Component {
       username: null,
       viewData: false,
       viewHabit: '',
+      errorText: '',
     }
     this.login = this.login.bind(this);
     this.signup = this.signup.bind(this);
@@ -141,7 +142,7 @@ class App extends React.Component {
         console.error(err);
       });
     } else {
-      alert('Please fill all fields when logging an event.')
+      this.setState({ errorText: 'Required' });
     }
   }
 
@@ -212,6 +213,7 @@ class App extends React.Component {
               <MuiThemeProvider>
                 <DataLogger habits={this.state.habits}
                             occurrences={this.state.occurrences}
+                            errorText={this.state.errorText}
                             getHabitsInfo={this.getHabitsInfo.bind(this)}
                             logHabit={this.logHabit} />
               </MuiThemeProvider>
