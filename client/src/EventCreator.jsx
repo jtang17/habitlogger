@@ -4,6 +4,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class EventCreator extends React.Component{
   constructor(props){
@@ -16,35 +17,9 @@ class EventCreator extends React.Component{
       value: 0,
     }
     this._timeframes = ['Day', 'Week', 'Month'];
-    // this.timeFrameChange = this.timeFrameChange.bind(this);
-    // this.eventChange = this.eventChange.bind(this);
-    // this.unitsChange = this.unitsChange.bind(this);
-    // this.limitChange = this.limitChange.bind(this);
     this.changeTimeframe = this.changeTimeframe.bind(this);
     this.elementChange = this.elementChange.bind(this);
   }
-
-  // timeFrameChange(e) {
-  //   this.setState({ currentEvent: `${e.label}` });
-  // }
-
-  // eventChange(e) {
-  //   this.setState({
-  //     event: e.target.value,
-  //   });
-  // }
-
-  // unitsChange(e) {
-  //   this.setState({
-  //     units: e.target.value,
-  //   });
-  // }
-
-  // limitChange(e) {
-  //   this.setState({
-  //     limit: e.target.value,
-  //   });
-  // }
 
   elementChange(e) {
     this.setState({
@@ -87,10 +62,9 @@ class EventCreator extends React.Component{
         </SelectField>
         <br />
         <br />
-        <button
-          onClick={this.props.createHabit.bind(this, this.state.event, this.state.units, this.state.limit, this.state.currentTimeframe) }>
-          Create Habit
-        </button>
+        <RaisedButton label="Create Habit" primary={true} onClick={this.props.createHabit.bind(this, this.state.event, this.state.units, this.state.limit, this.state.currentTimeframe) } />
+
+        <RaisedButton label="Log Data" primary={true} onClick={this.props.changeCreateHabitView} />
         <hr />
       </div>
     )

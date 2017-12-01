@@ -19,6 +19,7 @@ class MuiTable extends React.Component {
       time: '',
       showUpdateDelete: false,
     }
+    this.handleRowClick = this.handleRowClick.bind(this);
   }
 
   handleRowClick(e) {
