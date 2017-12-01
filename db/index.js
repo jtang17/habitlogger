@@ -17,13 +17,7 @@ database.once('open', () => {
 // HELPERS
 const sortByDate = (a, b) => {
   // Refer to docs for Array.prototype.sort.
-  if (a.timestamp > b.timestamp) {
-    return -1;
-  } else if (a.timestamp < b.timestamp) {
-    return 1;
-  } else {
-    return 0;
-  }
+  return a.timestamp - b.timestamp;
 };
 
 // METHODS

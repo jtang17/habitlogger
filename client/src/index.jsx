@@ -105,9 +105,6 @@ class App extends React.Component {
   // retrieve occurrences information for specific habit of user
   getHabitsInfo(habit) {
     let username = this.state.username;
-    this.setState({
-      selectedHabit: habit,
-    });
     axios.get(`/api/${username}/${habit}`)
       .then((res) => {
         this.setState({
