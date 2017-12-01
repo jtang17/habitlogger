@@ -181,15 +181,16 @@ const findHabit = (userEntry, view, cb) => {
 }
 
 const isSameTime = (dbTime, clientTime) => {
+  // string time stamps
   let stringDbTime = JSON.stringify(dbTime);
   let stringClientTime = JSON.stringify(clientTime);
-
+  // find the index of where T begins
   let findDbT = stringDbTime.indexOf('T');
   let findClientT = stringClientTime.indexOf('T');
-
+  // make timestamps comparable
   let dbTimestamp = stringDbTime.slice(1, findDbT);
   let clientTimestamp = stringClientTime.slice(1, findClientT);
-
+  // check if the equal
   if (clientTimestamp === dbTimestamp) {
     return true;
   } else {
@@ -251,7 +252,6 @@ const deleteHabit = (log, cb) => {
   findUser(log, (userEntry) => {
     findHabit(userEntry, log.viewHabit, (habitToUpdate) => {
       // if habit is found delete it
-      console.log('this is the habitToUpdate!!!', habitToUpdate)
       userEntry.habits.forEach((habit, i) => {
 
         if (habit.habit === habitToUpdate.habit) {
