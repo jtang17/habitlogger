@@ -1,4 +1,5 @@
 import React from 'react';
+import UpdateDelete from './UpdateDelete.jsx';
 import {
   Table,
   TableBody,
@@ -9,7 +10,6 @@ import {
 } from 'material-ui/Table';
 import moment from 'moment';
 import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
 
 class MuiTable extends React.Component {
   constructor(props) {
@@ -17,14 +17,22 @@ class MuiTable extends React.Component {
     this.state = {
       height: '300px',
       time: '',
-      showUpdateDelete: false,
+      showUpdateDelete: true,
+      selected: '',
     }
-    this.handleRowClick = this.handleRowClick.bind(this);
+    this.handleRowSelection = this.handleRowSelection.bind(this);
   }
 
-  handleRowClick(e) {
-    let parent = e.target.parentNode.parentNode.parentNode;
-    this.setState({ time: parent.childNodes[1] });
+  handleRowSelection(sel) {
+    let timeStamp = this.props.occurrences[sel].timestamp;
+    this.setState({
+      selected: sel,
+      time: timeStamp
+    });
+  }
+
+  isSelected(i) {
+    return this.state.selected.indexOf(i) !== -1;
   }
 
   handleModify() {
@@ -39,7 +47,7 @@ class MuiTable extends React.Component {
       <div className="table">
         <h1 className="tableName">{this.props.habit}</h1>
         <h2 className="limitInfo">You set your goal to {this.props.limit} {this.props.unit} per {this.props.timeframe}</h2>
-        <Table height={this.state.height} width={this.state.width}>
+        <Table height={this.state.height} width={this.state.width} onRowSelection={this.handleRowSelection}>
           <TableHeader displaySelectAll={false}>
             <TableRow>
               <TableHeaderColumn>Date</TableHeaderColumn>
@@ -51,7 +59,7 @@ class MuiTable extends React.Component {
               this.props.occurrences.map((occurence, index) => {
                 let momentDate = moment(occurence.timestamp).format('MMM Do YYYY');
                 return (
-                  <TableRow id="test" key={occurence._id} onChange={this.handleRowClick}>
+                  <TableRow key={occurence._id} selected={this.isSelected(index)}>
                     <TableRowColumn>{momentDate}</TableRowColumn>
                     <TableRowColumn>{occurence.value}</TableRowColumn>
                   </TableRow>
