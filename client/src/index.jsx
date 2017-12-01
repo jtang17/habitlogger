@@ -157,26 +157,30 @@ class App extends React.Component {
   }
 
   updateLogEntry(time, quantity) {
-    let data = {
-      username: this.state.username,
-      value: quantity,
-      timeFrame: time,
-      viewHabit: this.state.viewHabit,
-    }
-
-    if (quantity === '' || quantity === 0) {
-      axios.delete('/deleteLog', {username: username, timeFrame: time, viewHabit: viewHabit})
+    console.log(quantity);
+    if (quantity === '0' || quantity === '') {
+      let data = {
+        username: this.state.username,
+        timeframe: time,
+        viewHabit: this.state.viewHabit,
+      };
+      console.log(data);
+      axios({method: 'delete', url: '/deleteLog', data: data})
       .then((res) => {
-        console.log(res.body);
-        this.getHabitsInfo(viewHabit);
+        this.getHabitsInfo(this.state.viewHabit);
       })
-      .cath((err) => {
+      .catch((err) => {
         console.log(err);
       });
     } else {
+      let data = {
+        username: this.state.username,
+        value: quantity,
+        timeframe: time,
+        viewHabit: this.state.viewHabit,
+      };
       axios.put('/updatelog', data)
       .then((res) => {
-        console.log(res.body);
         this.getUserData();
       })
       .catch((err) => {
