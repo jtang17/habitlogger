@@ -8,47 +8,58 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import moment from 'moment';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class MuiTable extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      height: '300px',
+    }
+  }
+
+  handleRowClick(e) {
+    let parent = e.target.parentNode.parentNode.parentNode;
+    console.log(parent.childNodes[1].textContent);
+    console.log(parent.childNodes[2].textContent);
+  }
+
+  handleModify() {
+    // cycle through rows
+    // find the selected row
+      // show input field
+      // show update button
+      // show delete button
   }
 
   render() {
-    // this was for setting maximum displayed table entries to 15 but throwing errors on certain cases
-    // const limit = [];
-    // for(var i = 0; i < 15; i++) {
-    //   if(this.props.occurrences[i]) {
-    //     limit.push(this.props.occurrences[i]);
-    //   } else {
-    //     break;
-    //   }
-    // }
     return (
       <div className="table">
         <h1 className="tableName">{this.props.habit}</h1>
         <h2 className="limitInfo">You set your goal to {this.props.limit} {this.props.unit} per {this.props.timeframe}</h2>
-          <Table>
-            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-              <TableRow>
-                <TableHeaderColumn>Date</TableHeaderColumn>
-                <TableHeaderColumn>{this.props.unit}</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody displayRowCheckbox={false}>
-              {
-                this.props.occurrences.map((occurence, index) => {
-                  let momentDate = moment(occurence.timestamp).format('MMM Do YYYY');
-                  return (
-                    <TableRow key={occurence._id}>
-                      <TableRowColumn>{momentDate}</TableRowColumn>
-                      <TableRowColumn>{occurence.value}</TableRowColumn>
-                    </TableRow>
-                  )
-                })
-              }
-            </TableBody>
-          </Table>
+        <Table height={this.state.height} width={this.state.width}>
+          <TableHeader displaySelectAll={false}>
+            <TableRow>
+              <TableHeaderColumn>Date</TableHeaderColumn>
+              <TableHeaderColumn>{this.props.unit}</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {
+              this.props.occurrences.map((occurence, index) => {
+                let momentDate = moment(occurence.timestamp).format('MMM Do YYYY');
+                return (
+                  <TableRow id="test" key={occurence._id} onChange={this.handleRowClick}>
+                    <TableRowColumn>{momentDate}</TableRowColumn>
+                    <TableRowColumn>{occurence.value}</TableRowColumn>
+                  </TableRow>
+                )
+              })
+            }
+          </TableBody>
+        </Table>
+
+        <RaisedButton label="Modify" primary={true} onClick={this.handleModify}/>
       </div>
     )
   }
