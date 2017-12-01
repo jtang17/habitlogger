@@ -29,6 +29,7 @@ class App extends React.Component {
     this.getUserData = this.getUserData.bind(this);
     this.getHabitsInfo = this.getHabitsInfo.bind(this);
     this.logHabit = this.logHabit.bind(this);
+    this.updateLogEntry = this.updateLogEntry.bind(this);
     this.createHabit = this.createHabit.bind(this);
     this.selectHabit = this.selectHabit.bind(this);
     this.checkFields = this.checkFields.bind(this);
@@ -148,6 +149,33 @@ class App extends React.Component {
     }
   }
 
+  updateLogEntry(time, quantity) {
+    let data = {
+      username: username,
+      value: quantity,
+      timeFrame: time,
+      viewHabit: viewHabit,
+    }
+
+    if (quantity === '' || quantity === 0) {
+      axios.post('/', {username: username, timeFrame: time, viewHabit: viewHabit})
+      .then((res) => {
+        this.getHabitsInfo(viewHabit);
+      })
+      .cath((err) => {
+        console.log(err);
+      });
+    } else {
+      axios.post('/updatelog', data)
+      .then((res) => {
+        this.getUserData();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
+  }
+
   // used to ensure input fields are filled in for data logger
   checkFields(event, quantity) {
     return event && quantity.length > 0;
@@ -234,7 +262,12 @@ class App extends React.Component {
             <div className="row rowB">
               <MuiThemeProvider>
               {this.state.viewData ?
-                <MuiTable habit={this.state.viewHabit} timeframe={this.state.timeframe} unit={this.state.unit} limit={this.state.limit} occurrences={this.state.occurrences} /> : null}
+                <MuiTable habit={this.state.viewHabit}
+                          timeframe={this.state.timeframe}
+                          unit={this.state.unit}
+                          limit={this.state.limit}
+                          occurrences={this.state.occurrences}
+                          updateLogEntry={this.updateLogEntry} /> : null}
               </MuiThemeProvider>
             </div>
             <div className="row rowC">

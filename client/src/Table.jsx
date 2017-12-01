@@ -17,10 +17,15 @@ class MuiTable extends React.Component {
     this.state = {
       height: '300px',
       time: '',
-      showUpdateDelete: true,
+      quantity: '',
+      showUpdateDelete: false,
       selected: '',
+      errorText: '',
     }
     this.handleRowSelection = this.handleRowSelection.bind(this);
+    this.handleModifyClick = this.handleModifyClick.bind(this);
+    this.handleModify = this.handleModify.bind(this);
+    this.updateQuantity = this.updateQuantity.bind(this);
   }
 
   handleRowSelection(sel) {
@@ -28,6 +33,8 @@ class MuiTable extends React.Component {
     this.setState({
       selected: sel,
       time: timeStamp
+    }, function() {
+      console.log(this.state.time);
     });
   }
 
@@ -35,11 +42,22 @@ class MuiTable extends React.Component {
     return this.state.selected.indexOf(i) !== -1;
   }
 
-  handleModify() {
-    // show number input field
-    // show update button
-    // show delete button
-    // query: username, habit name, timestamp
+  handleModifyClick() {
+    if (this.state.selected !== '') {
+      this.setState({
+        showUpdateDelete: true,
+        errorText: '',
+      });
+    } else {
+      this.setState({ errorText: '** Please select a log to modify'});
+    }
+  }
+
+  updateQuantity(e) {
+    let val = e.target.value;
+    this.setState({ quantity: val }, () =>
+      this.updateLogEntry(time, quantity);
+    );
   }
 
   render() {
@@ -69,9 +87,12 @@ class MuiTable extends React.Component {
           </TableBody>
         </Table>
 
-        <RaisedButton label="Modify" primary={true} onClick={this.handleModify} />
+        <RaisedButton label="Modify" primary={true} onClick={this.handleModifyClick} />
+        <p>{this.state.errorText}</p>
         {this.state.showUpdateDelete ?
-          <UpdateDelete />
+          <UpdateDelete quantity={this.state.quantity}
+                        handleModify={this.handleModify}
+                        updateQuantity={this.updateQuantity} />
           : null
         }
       </div>
