@@ -53,19 +53,11 @@ class MuiTable extends React.Component {
     }
   }
 
-  handleModify() {
-    // gather username
-    // gather habit name
-    // gather timestamp
-    // gather quantity
-
-    // make a post request with info
-    // update view with response
-  }
-
   updateQuantity(e) {
     let val = e.target.value;
-    this.setState({ quantity: val });
+    this.setState({ quantity: val }, () =>
+      this.updateLogEntry(time, quantity);
+    );
   }
 
   render() {
