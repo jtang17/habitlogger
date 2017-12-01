@@ -21,7 +21,8 @@ class App extends React.Component {
       viewData: false,
       viewHabit: '',
       errorText: '',
-      createHabitView: false
+      createHabitView: false,
+      occurrences: []
     }
     this.login = this.login.bind(this);
     this.signup = this.signup.bind(this);
@@ -34,6 +35,7 @@ class App extends React.Component {
     this.selectHabit = this.selectHabit.bind(this);
     this.checkFields = this.checkFields.bind(this);
     this.changeCreateHabitView = this.changeCreateHabitView.bind(this);
+    this.deleteHabit = this.deleteHabit.bind(this)
   }
 
   login(username, password) {
@@ -93,13 +95,18 @@ class App extends React.Component {
   }
 
   // retrieve user's habits and set as state for other components
-  getUserData() {
+  getUserData(cb) {
     let username = this.state.username;
     axios.get(`/users/${username}`)
       .then((res) => {
         this.setState({
           habits: res.data,
         })
+      })
+      .then(() => {
+        if (cb) {
+          cb();
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -205,8 +212,9 @@ class App extends React.Component {
   selectHabit(habitName) {
     this.setState({
       viewHabit: habitName,
+    }, () => {
+      this.getHabitsInfo(habitName);
     });
-    this.getHabitsInfo(habitName);
   }
 
   componentDidMount() {
@@ -232,6 +240,22 @@ class App extends React.Component {
     });
   }
 
+  deleteHabit() {
+    axios.delete('/deleteHabit', {
+      data: {
+        username:this.state.username,
+        viewHabit: this.state.viewHabit
+      }
+    })
+    .then((res) => {
+      this.getUserData(() => {
+        this.selectHabit(this.state.habits[0]);
+      });
+    })
+    .catch((err) => console.log(err));
+    console.log('I deleted you!');
+  }
+
   // all MUI components must be wrapped by MuiThemeProvider
   render() {
     let habitCreateOrDataLogger;
@@ -244,7 +268,8 @@ class App extends React.Component {
                             getHabitsInfo={this.getHabitsInfo.bind(this)}
                             logHabit={this.logHabit}
                             changeCreateHabitView={this.changeCreateHabitView}
-                            selectHabit={this.selectHabit}/>
+                            selectHabit={this.selectHabit}
+                            deleteHabit={this.deleteHabit} />
     }
     return (
       <div className="container-fluid">
