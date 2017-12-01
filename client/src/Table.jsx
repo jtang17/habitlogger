@@ -25,7 +25,7 @@ class MuiTable extends React.Component {
     this.handleRowSelection = this.handleRowSelection.bind(this);
     this.handleModifyClick = this.handleModifyClick.bind(this);
     this.handleModify = this.handleModify.bind(this);
-    this.updateQuantity = this.updateQuantity(this);
+    this.updateQuantity = this.updateQuantity.bind(this);
   }
 
   handleRowSelection(sel) {
@@ -64,9 +64,8 @@ class MuiTable extends React.Component {
   }
 
   updateQuantity(e) {
-    console.log('hello');
-    console.log(e);
-    console.log(e.target);
+    let val = e.target.value;
+    this.setState({ quantity: val });
   }
 
   render() {
