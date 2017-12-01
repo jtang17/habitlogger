@@ -213,7 +213,8 @@ class App extends React.Component {
                             errorText={this.state.errorText}
                             getHabitsInfo={this.getHabitsInfo.bind(this)}
                             logHabit={this.logHabit}
-                            changeCreateHabitView={this.changeCreateHabitView} />
+                            changeCreateHabitView={this.changeCreateHabitView}
+                            selectHabit={this.selectHabit}/>
     }
     return (
       <div className="container-fluid">
@@ -228,10 +229,6 @@ class App extends React.Component {
             <div className="row rowA">
               <MuiThemeProvider>
                 {habitCreateOrDataLogger}
-              </MuiThemeProvider>
-
-              <MuiThemeProvider>
-                <EventSelector habits={this.state.habits} selectHabit={this.selectHabit}/>
               </MuiThemeProvider>
             </div>
             <div className="row rowB">

@@ -33,6 +33,9 @@ class DataLogger extends React.Component {
       currentHabit: this.props.habits[index],
       value: index,
     });
+    if (index !== undefined) {
+      this.props.selectHabit(this.props.habits[index]);
+    }
   }
 
   dateChange(e, date) {
