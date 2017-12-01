@@ -104,8 +104,21 @@ class App extends React.Component {
         })
       })
       .then(() => {
-        if (cb) {
-          cb();
+        if ((this.state.viewHabit === '' || this.state.habits.indexOf(this.state.viewHabit)) && this.state.habits[0]) {
+          this.selectHabit(this.state.habits[0], cb);
+        } else if (!this.state.habits[0]) {
+          this.setState({
+            timeframe: undefined,
+            unit: undefined,
+            limit: undefined,
+            occurrences: [],
+            viewData: true,
+            viewHabit: ''
+          });
+        } else {
+          if (cb) {
+            cb();
+          }
         }
       })
       .catch((err) => {
@@ -114,7 +127,7 @@ class App extends React.Component {
   }
 
   // retrieve occurrences information for specific habit of user
-  getHabitsInfo(habit) {
+  getHabitsInfo(habit, cb) {
     let username = this.state.username;
     axios.get(`/api/${username}/${habit}`)
       .then((res) => {
@@ -124,6 +137,10 @@ class App extends React.Component {
           limit: res.data.limit,
           occurrences: res.data.occurrences,
           viewData: true,
+        }, () => {
+          if (cb) {
+            cb();
+          }
         });
       })
       .catch((err) => {
@@ -181,7 +198,7 @@ class App extends React.Component {
       };
       axios.put('/updatelog', data)
       .then((res) => {
-        this.getUserData();
+        this.getHabitsInfo(this.state.viewHabit);
       })
       .catch((err) => {
         console.log(err);
@@ -213,11 +230,11 @@ class App extends React.Component {
   }
 
   // select habit to be displayed in chart and table
-  selectHabit(habitName) {
+  selectHabit(habitName, cb) {
     this.setState({
       viewHabit: habitName,
     }, () => {
-      this.getHabitsInfo(habitName);
+      this.getHabitsInfo(habitName, cb);
     });
   }
 
@@ -245,19 +262,18 @@ class App extends React.Component {
   }
 
   deleteHabit() {
-    axios.delete('/deleteHabit', {
-      data: {
-        username:this.state.username,
-        viewHabit: this.state.viewHabit
-      }
-    })
-    .then((res) => {
-      this.getUserData(() => {
-        this.selectHabit(this.state.habits[0]);
-      });
-    })
-    .catch((err) => console.log(err));
-    console.log('I deleted you!');
+    if (this.state.viewHabit) {
+      axios.delete('/deleteHabit', {
+        data: {
+          username:this.state.username,
+          viewHabit: this.state.viewHabit
+        }
+      })
+      .then((res) => {
+        this.getUserData();
+      })
+      .catch((err) => console.log(err));
+    }
   }
 
   // all MUI components must be wrapped by MuiThemeProvider
@@ -292,18 +308,20 @@ class App extends React.Component {
             </div>
             <div className="row rowB">
               <MuiThemeProvider>
-              {this.state.viewData ?
                 <MuiTable habit={this.state.viewHabit}
                           timeframe={this.state.timeframe}
                           unit={this.state.unit}
                           limit={this.state.limit}
                           occurrences={this.state.occurrences}
-                          updateLogEntry={this.updateLogEntry} /> : null}
+                          updateLogEntry={this.updateLogEntry} />
               </MuiThemeProvider>
             </div>
             <div className="row rowC">
-              {this.state.viewData ?
-                <Chart habit={this.state.viewHabit} timeframe={this.state.timeframe} unit={this.state.unit} limit={this.state.limit} occurrences={this.state.occurrences} /> : null}
+              <Chart habit={this.state.viewHabit}
+                     timeframe={this.state.timeframe}
+                     unit={this.state.unit}
+                     limit={this.state.limit}
+                     occurrences={this.state.occurrences} />
             </div>
           </div>
           : null}
