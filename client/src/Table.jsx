@@ -9,27 +9,28 @@ import {
 } from 'material-ui/Table';
 import moment from 'moment';
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 class MuiTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       height: '300px',
+      time: '',
+      showUpdateDelete: false;
     }
   }
 
   handleRowClick(e) {
     let parent = e.target.parentNode.parentNode.parentNode;
-    console.log(parent.childNodes[1].textContent);
-    console.log(parent.childNodes[2].textContent);
+    this.setState({ time: parent.childNodes[1] });
   }
 
   handleModify() {
-    // cycle through rows
-    // find the selected row
-      // show input field
-      // show update button
-      // show delete button
+    // show number input field
+    // show update button
+    // show delete button
+    // query: username, habit name, timestamp
   }
 
   render() {
