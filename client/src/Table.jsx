@@ -17,7 +17,7 @@ class MuiTable extends React.Component {
     this.state = {
       height: '300px',
       time: '',
-      showUpdateDelete: false;
+      showUpdateDelete: false,
     }
   }
 
@@ -61,6 +61,9 @@ class MuiTable extends React.Component {
         </Table>
 
         <RaisedButton label="Modify" primary={true} onClick={this.handleModify}/>
+        {if (showUpdateDelete) {
+          <UpdateDelete />
+        }}
       </div>
     )
   }
