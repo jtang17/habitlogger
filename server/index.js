@@ -126,6 +126,13 @@ app.post('/api/:username/log', checkLoginAuthStatus, (req, res) => {
 app.put('/updateLog', checkLoginAuthStatus, (req, res) => {
   db.updateLog(req.body, (output) => {
     console.log('checking if it went through', output);
+    res.send(output);
+  })
+})
+
+app.delete('/deleteLog', checkLoginAuthStatus, (req, res) => {
+  db.deleteLog(req.body, (output) => {
+    res.send(output)
   })
 })
 
