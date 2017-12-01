@@ -218,7 +218,7 @@ const updateLog = (log, cb) => {
         }
       });
     });
-  })
+  });
 
 }
 
@@ -241,9 +241,9 @@ const deleteLog = (log, cb) => {
         } else {
           cb(true);
         }
-      })
-    })
-  })
+      });
+    });
+  });
 }
 
 const deleteHabit = (log, cb) => {
@@ -251,16 +251,23 @@ const deleteHabit = (log, cb) => {
   findUser(log, (userEntry) => {
     findHabit(userEntry, log.viewHabit, (habitToUpdate) => {
       // if habit is found delete it
-      userEntry.habits = userEntry.habits.filter((habit) => {
-        if (habit !== habitToUpdate.habit) {
-          return habit;
+      console.log('this is the habitToUpdate!!!', habitToUpdate)
+      userEntry.habits.forEach((habit, i) => {
+
+        if (habit.habit === habitToUpdate.habit) {
+          console.log('if this equals im in!')
+          userEntry.habits.splice(i, 1);
         }
       })
-      cb(true);
-    })
-  })
-    // find the habit
-     // if the habit matches then delete it
+      userEntry.save((err) => {
+        if(err) {
+          cb(err)
+        } else {
+          cb(true);
+        }
+      });
+    });
+  });
 }
 
 // EXPORTS

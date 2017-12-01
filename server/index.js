@@ -136,9 +136,9 @@ app.delete('/deleteLog', (req, res) => {
   })
 })
 
-app.delete('/deleteHabit', checkLoginAuthStatus, (req, res) => {
+app.delete('/deleteHabit', (req, res) => {
   db.deleteHabit(req.body, (output) => {
-    res.send(true)
+    res.send(output)
   })
 })
 
