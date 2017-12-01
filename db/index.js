@@ -154,24 +154,40 @@ const logOccurrence = (logData, cb) => {
   });
 };
 
+const findsUser = (log, cb) => {
+  User.findOne({username: log.username}, (err, userEntry) => {
+    if (err) {
+      console.log('error finding user: ', err);
+    } else {
+      cb(userEntry);
+    }
+  })
+}
+
+const findHabit = (userEntry, view, cb) => {
+  let habitsOfUser = userEntry.habits
+  let habitToUpdate;
+  habitsOfUser.forEach((habit) => {
+    if(habit.habit === view) {
+      habitToUpdate = habit
+    }
+  })
+  if(habitToUpdate) {
+    cb(habitToUpdate);
+  } else {
+    console.log('habit not found');
+  }
+}
+
+
 const updateLog = (log, cb) => {
   // input req body and the cb
   // output a response that it has been updated
   // receieve the username and viewHabit and timeStamp of the habit and value
   // search for the user
-  User.findOne({username: log.username}, (err, userEntry) => {
-    if (err) {
-      console.log('Error in updateLog, check index.js-db', err)
-    } else {
-      // if the user is found
-      let habitsOfUser = userEntry.habits
+  findUser(log, (userEntry) => {
     // loop through the habits and find the occurance
-      let habitToUpdate;
-      habitsOfUser.forEach((habit) => {
-        if (habit.habit === log.viewHabit) {
-          habitToUpdate = habit;
-        }
-      })
+    findHabit(userEntry, log.viewHabit, (habitToUpdate) => {
       // loop through the occuranes
       habitToUpdate.occurrences.forEach((occurance) => {
         // check if the timestamp equals our new timestamp
@@ -188,35 +204,21 @@ const updateLog = (log, cb) => {
           cb(true);
         }
       });
-
-    }
+    });
   })
 
 }
 
 const deleteLog = (log, cb) => {
   // find the user
-  User.findOne({username: log.username}, (err, userEntry) => {
-    if (err) {
-      console.log('Error finding user in deleteLogFunction: ', err);
-    } else {
-      // find the habit
-      let habitToUpdate = userEntry.habits
-      let habitLogToDelete;
-      // loop through the occurances of that habit
-      habitToUpdate.forEach((habit) => {
-        if (habit.habit === log.viewHabit) {
-          habitLogToDelete = habit
-        }
-      });
-      // find the occurance with timestamp
-      habitLogToDelete.forEach((occurance, i) => {
+  findUser(log, (userEntry) => {
+    findHabit(userEntry, log.viewHabit, (habitToUpdate) => {
+      habitToUpdate.forEach((occurance, i) => {
         if (JSON.stringify(occurance.timeframe).indexOf(log.timeframe) > -1) {
           // remove that occurance
-          habitLogToDelete.splice(i, 1);
+          habitToUpdate.splice(i, 1);
         }
-      })
-      // save the userEntry
+      });
       userEntry.save((err) => {
       // return callback of true or false
         if (err) {
@@ -225,11 +227,11 @@ const deleteLog = (log, cb) => {
           cb(true);
         }
       })
-
-    }
-
-  });
+    })
+  })
 }
+
+// const deleteHabit
 
 // EXPORTS
 module.exports.signup = signup;
