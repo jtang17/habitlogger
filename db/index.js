@@ -234,6 +234,12 @@ const deleteHabit = (log, cb) => {
   findUser(log, (userEntry) => {
     findHabit(userEntry, log.viewHabit, (habitToUpdate) => {
       // if habit is found delete it
+      userEntry.habits = userEntry.habits.filter((habit) => {
+        if (habit !== habitToUpdate.habit) {
+          return habit;
+        }
+      })
+      cb(true);
     })
   })
     // find the habit
