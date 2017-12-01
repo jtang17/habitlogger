@@ -179,6 +179,23 @@ const findHabit = (userEntry, view, cb) => {
   }
 }
 
+const isSameTime = (dbTime, clientTime) => {
+  let stringDbTime = JSON.stringify(dbTime);
+  let stringClientTime = JSON.stringify(clientTime);
+
+  let findDbT = stringDbTime.indexOf('T');
+  let findClientT = stringClientTime.indexOf('T');
+
+  let dbTimestamp = stringDbTime.slice(1, findDbT);
+  let clientTimestamp = stringClientTime.slice(1, findClientT);
+
+  if (clientTimestamp === dbTimestamp) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 const updateLog = (log, cb) => {
   // search for the user
   findUser(log, (userEntry) => {
@@ -187,21 +204,30 @@ const updateLog = (log, cb) => {
       // loop through the occuranes
       habitToUpdate.occurrences.forEach((occurrence) => {
         // check if the timestamp equals our new timestamp
-        console.log('object from client: ', log.timeframe, occurrence.timestamp)
-        let stringDbTime = JSON.stringify(occurrence.timestamp);
-        let findT = stringDbTime.indexOf('T');
-        let dbTime = stringDbTime.slice(1, findT);
-
-        let stringClientTime = JSON.stringify(occurrence.timestamp);
-        let findClientT = stringClientTime.indexOf('T');
-        let clientTime = stringClientTime.slice(1, findClientT);
-
-        if (dbTime === clientTime) {
-          // if it does then make our value = our new value
-          console.log(occurrence.value)
+        if (isSameTime(occurrence.timestamp, log.timeframe)) {
+          console.log('it equals and works!!!')
           occurrence.value = log.value;
-          console.log('value of the occurrence:  ', occurrence.value)
         }
+
+
+
+
+        // console.log('object from client: ', log.timeframe, occurrence.timestamp)
+        // let stringDbTime = JSON.stringify(occurrence.timestamp);
+        // let findT = stringDbTime.indexOf('T');
+        // let dbTime = stringDbTime.slice(1, findT);
+
+        // let stringClientTime = JSON.stringify(log.timesframe);
+        // let findClientT = stringClientTime.indexOf('T');
+        // let clientTime = stringClientTime.slice(1, findClientT);
+
+        // if (dbTime === clientTime) {
+        //   // if it does then make our value = our new value
+        //   console.log(occurrence.value)
+        //   occurrence.value = log.value;
+        //   console.log('value of the occurrence:  ', occurrence.value)
+        // }
+
       });
       // save the userEntry and return the callback
       userEntry.save((err) => {
