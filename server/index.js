@@ -130,7 +130,7 @@ app.put('/updateLog', (req, res) => {
   })
 })
 
-app.delete('/deleteLog', checkLoginAuthStatus, (req, res) => {
+app.delete('/deleteLog', (req, res) => {
   db.deleteLog(req.body, (output) => {
     res.send(output)
   })

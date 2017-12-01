@@ -159,6 +159,7 @@ const findUser = (log, cb) => {
     if (err) {
       console.log('error finding user: ', err);
     } else {
+      // console.log('user is found!!!!!!', userEntry)
       cb(userEntry);
     }
   })
@@ -205,29 +206,8 @@ const updateLog = (log, cb) => {
       habitToUpdate.occurrences.forEach((occurrence) => {
         // check if the timestamp equals our new timestamp
         if (isSameTime(occurrence.timestamp, log.timeframe)) {
-          console.log('it equals and works!!!')
           occurrence.value = log.value;
         }
-
-
-
-
-        // console.log('object from client: ', log.timeframe, occurrence.timestamp)
-        // let stringDbTime = JSON.stringify(occurrence.timestamp);
-        // let findT = stringDbTime.indexOf('T');
-        // let dbTime = stringDbTime.slice(1, findT);
-
-        // let stringClientTime = JSON.stringify(log.timesframe);
-        // let findClientT = stringClientTime.indexOf('T');
-        // let clientTime = stringClientTime.slice(1, findClientT);
-
-        // if (dbTime === clientTime) {
-        //   // if it does then make our value = our new value
-        //   console.log(occurrence.value)
-        //   occurrence.value = log.value;
-        //   console.log('value of the occurrence:  ', occurrence.value)
-        // }
-
       });
       // save the userEntry and return the callback
       userEntry.save((err) => {
@@ -249,9 +229,9 @@ const deleteLog = (log, cb) => {
       // loop through the occurances
       habitToUpdate.occurrences.forEach((occurrence, i) => {
         // check if the timeframe equals our time frame
-        if (JSON.stringify(occurrence.timeframe).indexOf(log.timeframe) > -1) {
+        if (isSameTime(occurrence.timestamp, log.timeframe)) {
           // remove that occurance
-          habitToUpdate.splice(i, 1);
+          habitToUpdate.occurrences.splice(i, 1);
         }
       });
       userEntry.save((err) => {
