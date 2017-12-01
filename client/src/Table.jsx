@@ -60,10 +60,11 @@ class MuiTable extends React.Component {
           </TableBody>
         </Table>
 
-        <RaisedButton label="Modify" primary={true} onClick={this.handleModify}/>
-        {if (showUpdateDelete) {
+        <RaisedButton label="Modify" primary={true} onClick={this.handleModify} />
+        {this.state.showUpdateDelete ?
           <UpdateDelete />
-        }}
+          : null
+        }
       </div>
     )
   }
