@@ -179,21 +179,17 @@ const findHabit = (userEntry, view, cb) => {
   }
 }
 
-
 const updateLog = (log, cb) => {
-  // input req body and the cb
-  // output a response that it has been updated
-  // receieve the username and viewHabit and timeStamp of the habit and value
   // search for the user
   findUser(log, (userEntry) => {
     // loop through the habits and find the occurance
     findHabit(userEntry, log.viewHabit, (habitToUpdate) => {
       // loop through the occuranes
-      habitToUpdate.occurrences.forEach((occurance) => {
+      habitToUpdate.occurrences.forEach((occurrence) => {
         // check if the timestamp equals our new timestamp
-        if (JSON.stringify(occurance.timeframe).indexOf(log.timeframe) > -1) {
+        if (JSON.stringify(occurrence.timeframe).indexOf(log.timeframe) > -1) {
           // if it does then make our value = our new value
-          occurance.value = log.value;
+          occurrence.value = log.value;
         }
       });
       // save the userEntry and return the callback
@@ -213,8 +209,10 @@ const deleteLog = (log, cb) => {
   // find the user
   findUser(log, (userEntry) => {
     findHabit(userEntry, log.viewHabit, (habitToUpdate) => {
-      habitToUpdate.forEach((occurance, i) => {
-        if (JSON.stringify(occurance.timeframe).indexOf(log.timeframe) > -1) {
+      // loop through the occurances
+      habitToUpdate.occurrences.forEach((occurrence, i) => {
+        // check if the timeframe equals our time frame
+        if (JSON.stringify(occurrence.timeframe).indexOf(log.timeframe) > -1) {
           // remove that occurance
           habitToUpdate.splice(i, 1);
         }
