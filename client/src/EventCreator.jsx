@@ -9,48 +9,55 @@ class EventCreator extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      timeframes: ['Day', 'Week', 'Month'],
       currentTimeframe : 'Day',
       event: '',
       units: '',
       limit: '',
       value: 0,
     }
-    this.timeFrameChange = this.timeFrameChange.bind(this);
-    this.eventChange = this.eventChange.bind(this);
-    this.unitsChange = this.unitsChange.bind(this);
-    this.limitChange = this.limitChange.bind(this);
+    this._timeframes = ['Day', 'Week', 'Month'];
+    // this.timeFrameChange = this.timeFrameChange.bind(this);
+    // this.eventChange = this.eventChange.bind(this);
+    // this.unitsChange = this.unitsChange.bind(this);
+    // this.limitChange = this.limitChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.elementChange = this.elementChange.bind(this);
   }
 
-  timeFrameChange(e) {
-    this.setState({ currentEvent: `${e.label}` });
-  }
+  // timeFrameChange(e) {
+  //   this.setState({ currentEvent: `${e.label}` });
+  // }
 
-  eventChange(e) {
+  // eventChange(e) {
+  //   this.setState({
+  //     event: e.target.value,
+  //   });
+  // }
+
+  // unitsChange(e) {
+  //   this.setState({
+  //     units: e.target.value,
+  //   });
+  // }
+
+  // limitChange(e) {
+  //   this.setState({
+  //     limit: e.target.value,
+  //   });
+  // }
+
+  elementChange(e) {
     this.setState({
-      event: e.target.value,
-    });
-  }
-
-  unitsChange(e) {
-    this.setState({
-      units: e.target.value,
-    });
-  }
-
-  limitChange(e) {
-    this.setState({
-      limit: e.target.value,
-    });
+      [e.target.name]: e.target.value
+    })
   }
 
   // for SelectField drop down change and select handling
   handleChange(e, index) {
     this.setState({
       value: index,
-      currentTimeframe: this.state.timeframes[index],
-    });
+      currentTimeframe: this._timeframes[index],
+    }, () => console.log('timeFrame: ', this.state.currentTimeframe));
   }
 
   render() {
@@ -61,11 +68,11 @@ class EventCreator extends React.Component{
       <div className="eventCreator">
       <h1>Habit Creator</h1>
       <Paper zDepth={1} style={{width: '50%'}}>
-        <TextField hintText="Habit name" style={style} underlineShow={false} onChange={this.eventChange} />
+        <TextField hintText="Habit name" style={style} underlineShow={false} onChange={this.elementChange} name="event"/>
         <Divider />
-        <TextField hintText="Habit units" style={style} underlineShow={false} onChange={this.unitsChange} />
+        <TextField hintText="Habit units" style={style} underlineShow={false} onChange={this.elementChange} name="units"/>
         <Divider />
-        <TextField type="number" hintText="Goal" style={style} underlineShow={false} onChange={this.limitChange}/>
+        <TextField type="number" hintText="Goal" style={style} underlineShow={false} onChange={this.elementChange} name="limit"/>
         <Divider />
       </Paper>
         <SelectField
@@ -73,7 +80,7 @@ class EventCreator extends React.Component{
           value={this.state.value}
           onChange={this.handleChange}
         >
-        {this.state.timeframes.map((timeframe, index) =>
+        {this._timeframes.map((timeframe, index) =>
           <MenuItem key={index} value={index} primaryText={timeframe} />
         )}
 
