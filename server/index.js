@@ -123,7 +123,7 @@ app.post('/api/:username/log', checkLoginAuthStatus, (req, res) => {
   // db.updateLog(req.body, (occurance) => {
     // return something to the client
   // })
-app.put('/updateLog', checkLoginAuthStatus, (req, res) => {
+app.put('/updateLog', (req, res) => {
   db.updateLog(req.body, (output) => {
     console.log('checking if it went through', output);
     res.send(output);
