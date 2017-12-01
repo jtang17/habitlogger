@@ -1,9 +1,10 @@
 import React from 'react';
-import SelectField from 'material-ui/SelectField';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import moment from 'moment';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class DataLogger extends React.Component {
   constructor(props) {
@@ -13,30 +14,32 @@ class DataLogger extends React.Component {
       habitTime: new Date(),
       quantity: '',
       value: 0,
+      errorText: '',
     };
-    this.logChange = this.logChange.bind(this);
-    this.handleDateChange = this.handleDateChange.bind(this);
-    this.handleQuantityChange = this.handleQuantityChange.bind(this);
+    this.habitChange = this.habitChange.bind(this);
+    this.dateChange = this.dateChange.bind(this);
+    this.quantityChange = this.quantityChange.bind(this);
     this.checkDupe = this.checkDupe.bind(this);
   }
 
-  // used to have 'Select Habit' placeholder text in drop down menu on mount
+  // shows 'Select Habit' as placeholder for select dropdown
+  // rather than as floating text
   componentWillMount() {
-    this.logChange();
+    this.habitChange();
   }
 
-  logChange(e, index) {
+  habitChange(e, index) {
     this.setState({
       currentHabit: this.props.habits[index],
       value: index,
     });
   }
 
-  handleDateChange(e, date) {
+  dateChange(e, date) {
     this.setState({habitTime: date});
   }
 
-  handleQuantityChange(e) {
+  quantityChange(e) {
     this.setState({
       quantity: e.target.value,
     });
@@ -55,6 +58,7 @@ class DataLogger extends React.Component {
     let found = false;
 
     occurrences.forEach(item => {
+      console.log(item.timestamp.slice(0, 10), time.slice(0, 10));
       if (item.timestamp.slice(0, 10) === time.slice(0, 10)) {
         found = true;
       }
@@ -70,19 +74,35 @@ class DataLogger extends React.Component {
   render() {
     return (
       <div className="dataLogger">
+
         <h1>Data Logger</h1>
+
         <SelectField
           floatingLabelText="Select Habit"
           value={this.state.value}
-          onChange={this.logChange}>
-          {this.props.habits.map((event, index)=>{
+          errorText={this.props.errorText}
+          onChange={this.habitChange}>
+          {this.props.habits.map( (event, index) => {
             return <MenuItem key={index} value={index} primaryText={event} />
           })}
         </SelectField>
         <br />
-        <DatePicker autoOk={true} hintText="Select Date" container="inline" mode="landscape" value={this.state.habitTime} onChange={(x, day) => this.handleDateChange(x,day)} />
-        <input type="number" onChange={this.handleQuantityChange} />
-        <button onClick={this.checkDupe} >Log Habit</button>
+
+        <DatePicker autoOk={true}
+                    hintText="Select Date"
+                    container="inline"
+                    mode="landscape"
+                    value={this.state.habitTime}
+                    onChange={ (x, day) => this.dateChange(x,day) } />
+
+        <TextField type="number"
+                   min="0"
+                   hintText="How many?"
+                   errorText={this.props.errorText}
+                   onChange={this.quantityChange} />
+        <br />
+
+        <RaisedButton label="Log!" primary={true} onClick={this.checkDupe} />
       </div>
     )
   }
