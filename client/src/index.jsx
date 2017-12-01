@@ -234,20 +234,19 @@ class App extends React.Component {
   }
 
   deleteHabit() {
-    var delHabit = this.state.viewHabit;
-    this.setState({
-      viewHabit: this.state.habits[0]
-    });
-
     axios.delete('/deleteHabit', {
       data: {
         username:this.state.username,
-        viewHabit: delHabit
+        viewHabit: this.state.viewHabit
       }
     })
-    .then((res) => console.log('response: ',res))
+    .then((res) => {
+      this.setState({
+        viewHabit: ''
+      });
+    })
     .catch((err) => console.log(err));
-    console.log('I delete you!');
+    console.log('I deleted you!');
   }
 
   // all MUI components must be wrapped by MuiThemeProvider
