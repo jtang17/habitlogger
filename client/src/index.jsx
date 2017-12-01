@@ -34,6 +34,7 @@ class App extends React.Component {
     this.selectHabit = this.selectHabit.bind(this);
     this.checkFields = this.checkFields.bind(this);
     this.changeCreateHabitView = this.changeCreateHabitView.bind(this);
+    this.deleteHabit = this.deleteHabit.bind(this)
   }
 
   login(username, password) {
@@ -232,6 +233,23 @@ class App extends React.Component {
     });
   }
 
+  deleteHabit() {
+    var delHabit = this.state.viewHabit;
+    this.setState({
+      viewHabit: this.state.habits[0]
+    });
+
+    axios.delete('/deleteHabit', {
+      data: {
+        username:this.state.username,
+        viewHabit: delHabit
+      }
+    })
+    .then((res) => console.log('response: ',res))
+    .catch((err) => console.log(err));
+    console.log('I delete you!');
+  }
+
   // all MUI components must be wrapped by MuiThemeProvider
   render() {
     let habitCreateOrDataLogger;
@@ -244,7 +262,8 @@ class App extends React.Component {
                             getHabitsInfo={this.getHabitsInfo.bind(this)}
                             logHabit={this.logHabit}
                             changeCreateHabitView={this.changeCreateHabitView}
-                            selectHabit={this.selectHabit}/>
+                            selectHabit={this.selectHabit}
+                            deleteHabit={this.deleteHabit} />
     }
     return (
       <div className="container-fluid">
