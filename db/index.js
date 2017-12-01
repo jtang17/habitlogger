@@ -229,7 +229,22 @@ const deleteLog = (log, cb) => {
   })
 }
 
-// const deleteHabit
+const deleteHabit = (log, cb) => {
+  // find the user
+  findUser(log, (userEntry) => {
+    findHabit(userEntry, log.viewHabit, (habitToUpdate) => {
+      // if habit is found delete it
+      userEntry.habits = userEntry.habits.filter((habit) => {
+        if (habit !== habitToUpdate.habit) {
+          return habit;
+        }
+      })
+      cb(true);
+    })
+  })
+    // find the habit
+     // if the habit matches then delete it
+}
 
 // EXPORTS
 module.exports.signup = signup;
@@ -240,3 +255,4 @@ module.exports.createHabit = createHabit;
 module.exports.logOccurrence = logOccurrence;
 module.exports.updateLog = updateLog;
 module.exports.deleteLog = deleteLog;
+module.exports.deleteHabit = deleteHabit;

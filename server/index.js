@@ -136,6 +136,12 @@ app.delete('/deleteLog', checkLoginAuthStatus, (req, res) => {
   })
 })
 
+app.delete('/deleteHabit', checkLoginAuthStatus, (req, res) => {
+  db.deleteHabit(req.body, (output) => {
+    res.send(true)
+  })
+})
+
 app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);
 });
