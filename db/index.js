@@ -154,7 +154,7 @@ const logOccurrence = (logData, cb) => {
   });
 };
 
-const findsUser = (log, cb) => {
+const findUser = (log, cb) => {
   User.findOne({username: log.username}, (err, userEntry) => {
     if (err) {
       console.log('error finding user: ', err);
@@ -187,9 +187,20 @@ const updateLog = (log, cb) => {
       // loop through the occuranes
       habitToUpdate.occurrences.forEach((occurrence) => {
         // check if the timestamp equals our new timestamp
-        if (JSON.stringify(occurrence.timeframe).indexOf(log.timeframe) > -1) {
+        console.log('object from client: ', log.timeframe, occurrence.timestamp)
+        let stringDbTime = JSON.stringify(occurrence.timestamp);
+        let findT = stringDbTime.indexOf('T');
+        let dbTime = stringDbTime.slice(1, findT);
+
+        let stringClientTime = JSON.stringify(occurrence.timestamp);
+        let findClientT = stringClientTime.indexOf('T');
+        let clientTime = stringClientTime.slice(1, findClientT);
+
+        if (dbTime === clientTime) {
           // if it does then make our value = our new value
+          console.log(occurrence.value)
           occurrence.value = log.value;
+          console.log('value of the occurrence:  ', occurrence.value)
         }
       });
       // save the userEntry and return the callback
