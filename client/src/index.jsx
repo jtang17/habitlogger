@@ -241,8 +241,13 @@ class App extends React.Component {
       }
     })
     .then((res) => {
+      this.getUserData();
       this.setState({
         viewHabit: ''
+      }, () => {
+        this.setState({
+          viewHabit: this.state.habits[0]
+        });
       });
     })
     .catch((err) => console.log(err));
