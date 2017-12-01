@@ -20,7 +20,7 @@ class EventCreator extends React.Component{
     // this.eventChange = this.eventChange.bind(this);
     // this.unitsChange = this.unitsChange.bind(this);
     // this.limitChange = this.limitChange.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.changeTimeframe = this.changeTimeframe.bind(this);
     this.elementChange = this.elementChange.bind(this);
   }
 
@@ -53,11 +53,11 @@ class EventCreator extends React.Component{
   }
 
   // for SelectField drop down change and select handling
-  handleChange(e, index) {
+  changeTimeframe(e, index) {
     this.setState({
       value: index,
       currentTimeframe: this._timeframes[index],
-    }, () => console.log('timeFrame: ', this.state.currentTimeframe));
+    });
   }
 
   render() {
@@ -78,7 +78,7 @@ class EventCreator extends React.Component{
         <SelectField
           floatingLabelText="Choose Timeframe"
           value={this.state.value}
-          onChange={this.handleChange}
+          onChange={this.changeTimeframe}
         >
         {this._timeframes.map((timeframe, index) =>
           <MenuItem key={index} value={index} primaryText={timeframe} />
