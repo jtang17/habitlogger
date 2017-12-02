@@ -138,6 +138,10 @@ const logOccurrence = (logData, cb) => {
       userEntry.habits.forEach(habitEntry => {
         if (logData.habit === habitEntry.habit) {
           habitEntry.occurrences.push(logData.occurrence);
+          // update the points of the user
+          updatePoints(habitEntry.timeframe, habitEntry.limit, habitEntry.occurrences, habitEntry.totalPoints)
+          // update the ranking of the user
+          updateRanking(habitEntry.totalPoints, habitEntry.ranking)
           userEntry.save((err, updatedUserEntry) => {
             if (err) {
               console.error(`Error getting ${user}.`);
@@ -211,6 +215,10 @@ const updateLog = (log, cb) => {
           occurrence.value = log.value;
         }
       });
+      // update the points
+      updatePoints(habitToUpdate.timeframe, habitToUpdate.limit, habitToUpdate.occurences, habitToUpdate.totalPoints);
+      // update the ranking
+      updateRanking(habitToUpdate.totalPoints, habitToUpdate.ranking);
       // save the userEntry and return the callback
       userEntry.save((err) => {
         if (err) {
@@ -236,6 +244,11 @@ const deleteLog = (log, cb) => {
           habitToUpdate.occurrences.splice(i, 1);
         }
       });
+      // update the points
+      updatePoints(habitToUpdate.timeframe, habitToUpdate.limit, habitToUpdate.occurences, habitToUpdate.totalPoints);
+      // update the ranking
+      updateRanking(habitToUpdate.totalPoints, habitToUpdate.ranking);
+      // save new updates to the db
       userEntry.save((err) => {
       // return callback of true or false
         if (err) {
