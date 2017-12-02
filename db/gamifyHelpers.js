@@ -21,6 +21,7 @@ const updateRanking = (totalPoints, ranking) => {
 }
 
 const updatePoints = (timeframe, limit, occurrence, totalPoints) => {
+  console.log('is updatePoints running?');
 
   if (timeframe === 'Day') {
     for (let i = 0; i < occurrence.length; i++) {
@@ -55,8 +56,8 @@ const updatePoints = (timeframe, limit, occurrence, totalPoints) => {
     let goalMet = false;
 
     for (let i = 0; i < occurrence.length; i++) {
-      let currentMonth = occurrence.[i].timeframe.slice(5, 2);
-      let currentDay = occurrence.[i].timeframe.slice(8, 2);
+      let currentMonth = occurrence[i].timeframe.slice(5, 2);
+      let currentDay = occurrence[i].timeframe.slice(8, 2);
 
       if (currentMonth === month ||
           (currentMonth === month + 1 ||
@@ -76,13 +77,15 @@ const updatePoints = (timeframe, limit, occurrence, totalPoints) => {
         goalTotal = 0;
         goalMet = false
         i--;
+      }
     }
   }
 
-  totalPoints += occurrence.length * 50;
+  return totalPoints += occurrence.length * 50;
 }
 
-
+module.exports.updateRanking = updateRanking;
+module.exports.updatePoints = updatePoints;
 
 
 // UPDATE TITLE
