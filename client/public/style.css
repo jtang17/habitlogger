@@ -39,6 +39,10 @@ body {
   text-align: center;
 }
 
+.features h1 {
+  color: white;
+}
+
 .highlights {
   padding: 30px;
 }
@@ -53,7 +57,7 @@ body {
   background-repeat: no-repeat;
   background-position: 70% 30%;
   background-size: cover;
-  height: 500px;
+  height: 500px auto;
 }
 .login {
   margin-top: 50px;
@@ -64,7 +68,7 @@ body {
 .loginSignup {
   margin-bottom: 40px;
   margin-top: 90px;
-  margin-left: 10%;
+  padding: 10%;
 }
 
 .loginSignup h1 {
@@ -87,7 +91,8 @@ body {
 
 .signup {
   margin-top: 50px;
-  padding: 10px;
+  padding: 50px;
+  margin-right: 50px;
   text-align: center;
 }
 
@@ -114,4 +119,14 @@ body {
 
 .use {
   text-align: center;
+}
+
+.hero h1 {
+  color: white;
+  margin: 0 auto;
+}
+
+.titleHero {
+  margin-top: 150px;
+  font-size: 115px;
 }
