@@ -9,7 +9,14 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import moment from 'moment';
+import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+
+const style = {
+  paper: {
+    padding: '20px',
+  }
+}
 
 class MuiTable extends React.Component {
   constructor(props) {
@@ -77,6 +84,7 @@ class MuiTable extends React.Component {
 
     return (
       <div className="table">
+        <Paper style={style.paper} zDepth={1}>
         <h1 className="tableName">You are {article} {this.props.ranking} at {this.props.habit}</h1>
         <h3 className="pointDisplay">You have earned {this.props.totalPoints} points!</h3>
         <h3 className="limitInfo">You set your goal to {this.props.limit} {this.props.unit} per {this.props.timeframe}</h3>
@@ -110,6 +118,7 @@ class MuiTable extends React.Component {
                         handleUpdateClick={this.handleUpdateClick} />
           : null
         }
+        </Paper>
       </div>
     )
   }

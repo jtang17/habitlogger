@@ -39,8 +39,9 @@ class EventCreator extends React.Component{
   render() {
     const style = {
       eventCreator: {
-        height: 420,
-        width: 300,
+        height: 600,
+        width: 400,
+        padding: '20px',
         margin: '0 auto',
         textAlign: 'center',
         display: 'inline-block',
@@ -67,12 +68,12 @@ class EventCreator extends React.Component{
         <Paper style={style.eventCreator} zDepth={1} >
           <AppBar title="Habit Creator" style={style.appBar} showMenuIconButton={false} />
 
-          <TextField hintText="Habit name"  underlineShow={false} onChange={this.elementChange} name="event"/>
-          <Divider />
-          <TextField hintText="Habit units" underlineShow={false} onChange={this.elementChange} name="units"/>
-          <Divider />
-          <TextField type="number" hintText="Goal" underlineShow={false} onChange={this.elementChange} name="limit"/>
-          <Divider />
+          <TextField hintText="Habit name" onChange={this.elementChange} name="event"/>
+
+          <TextField hintText="Habit units" onChange={this.elementChange} name="units"/>
+
+          <TextField type="number" hintText="Goal" onChange={this.elementChange} name="limit"/>
+
           <SelectField
             floatingLabelText="Choose Timeframe"
             value={this.state.value}

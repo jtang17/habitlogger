@@ -79,8 +79,9 @@ class DataLogger extends React.Component {
   render() {
     const style = {
       dataLogger: {
-        height: 420,
-        width: 300,
+        height: 600,
+        width: 400,
+        padding: '20px',
         margin: '0 auto',
         textAlign: 'center',
         display: 'inline-block',
