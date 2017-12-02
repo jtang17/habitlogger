@@ -47,7 +47,10 @@ body {
 }
 
 #rowWithBackground {
-  background-image: url('/assets/yoga.jpeg');
+  background-image: url('/assets/sanfran.jpeg');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
 }
 .login {
   margin-top: 50px;

@@ -65,7 +65,7 @@ class Login extends React.Component {
       login: {
         height: 270,
         width: 300,
-        margin: '0 auto',
+        margin: 100,
         textAlign: 'center',
         display: 'inline-block'
       },
@@ -142,10 +142,12 @@ class Login extends React.Component {
     return (
       <MuiThemeProvider muiTheme={this.props.muiTheme}>
         <div>
-          <div className="row loginSignup" id="rowWithBackground">
-            {loginOrSignupView}
-            <div className="col-md-4 icon">
+          <div className="row" id="rowWithBackground">
+            <div className="loginSignup">
+              {loginOrSignupView}
+              <div className="col-md-4 icon">
 
+              </div>
             </div>
           </div>
           <div className="quote">
