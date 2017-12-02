@@ -338,11 +338,13 @@ class App extends React.Component {
               </MuiThemeProvider>
             </div>
             <div className="row rowC">
-              <Chart habit={this.state.viewHabit}
-                     timeframe={this.state.timeframe}
-                     unit={this.state.unit}
-                     limit={this.state.limit}
-                     occurrences={this.state.occurrences} />
+              <MuiThemeProvider muiTheme={muiTheme}>
+                <Chart habit={this.state.viewHabit}
+                       timeframe={this.state.timeframe}
+                       unit={this.state.unit}
+                       limit={this.state.limit}
+                       occurrences={this.state.occurrences} />
+              </MuiThemeProvider>
             </div>
           </div>
           : null}

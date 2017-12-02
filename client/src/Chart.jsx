@@ -2,6 +2,8 @@ import React from 'react';
 import {Line} from 'react-chartjs-2';
 import Social from './socialSharing.jsx';
 import moment from 'moment';
+import Paper from 'material-ui/Paper';
+import AppBar from 'material-ui/AppBar';
 
 class Chart extends React.Component {
   constructor(props) {
@@ -88,12 +90,19 @@ class Chart extends React.Component {
 
   render() {
     this.compileEntryValues(this.props.occurrences);
+    const style = {
+      appBar: {
+        textAlign: 'center'
+      }
+    };
     return (
       <div id="chart">
-        <h3>{this.props.habit} over the past {this._maxDay} days</h3>
-        <p>Share your progress!</p>
-        <Social />
-        <Line data={this.data} options={this._options}/>
+        <Paper zDepth={1}>
+          <AppBar title={`${this.props.habit} over the past ${this._maxDay} days`} style={style.appBar} showMenuIconButton={false} />
+          <p>Share your progress!</p>
+          <Social />
+          <Line data={this.data} options={this._options}/>
+        </Paper>
       </div>
     );
   }
