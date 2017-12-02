@@ -65,7 +65,6 @@ class Login extends React.Component {
       login: {
         height: 270,
         width: 300,
-        margin: '400 10 400 10',
         textAlign: 'center',
         display: 'inline-block'
       },
@@ -143,11 +142,11 @@ class Login extends React.Component {
       <MuiThemeProvider muiTheme={this.props.muiTheme}>
         <div>
           <div className="row" id="rowWithBackground">
-            <div className="loginSignup col-md-2">
-              {loginOrSignupView}
+            <div className="col-md-8 features">
+              <h1 className="hero titleHero">reHabit</h1>
             </div>
-            <div>
-              <h1 className="col-md-10">reHabit</h1>
+            <div className="loginSignup col-md-4">
+              {loginOrSignupView}
             </div>
           </div>
           <div className="quote">
@@ -156,19 +155,20 @@ class Login extends React.Component {
             <h3>-Lao Tzu</h3>
           </div>
           <div className="row highlights">
-            <div className="col-md-4 use">
-              <h2>Improve Yourself</h2>
-                <p>Set goals and limits for yourself</p>
-                <p>Improve your habits</p>
-                <p>Track your success</p>
+            <div className="col-md-4 features">
+              <h2>Improve yourself</h2>
+              <p>Set goals</p>
+              <p>Make new Habits</p>
+              <p>Track you success</p>
             </div>
             <div className="col-md-4 icon">
               <img src="https://www.analyticsinsight.net/wp-content/uploads/2017/09/data-visualization-tools-concept.png" />
             </div>
             <div className="col-md-4 features">
               <h2>Features</h2>
-              <p>Track habits by date</p>
-              <p>Easily visualize your habits</p>
+              <p>Track your habits</p>
+              <p>Easily visualize your progress</p>
+              <p>Level up rankings to become a master</p>
             </div>
           </div>
         </div>
