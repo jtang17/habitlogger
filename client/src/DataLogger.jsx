@@ -63,7 +63,6 @@ class DataLogger extends React.Component {
     let found = false;
 
     occurrences.forEach(item => {
-      console.log(item.timestamp.slice(0, 10), time.slice(0, 10));
       if (item.timestamp.slice(0, 10) === time.slice(0, 10)) {
         found = true;
       }
