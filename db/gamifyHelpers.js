@@ -1,11 +1,89 @@
-// TITLE OBJECT
-const titles = {
+const rankings = {
   apprentice: 0,
   yeoman: 500,
   guide: 1500,
   guru: 5000,
   master: 10000,
 }
+
+const updateRanking = (totalPoints, ranking) => {
+  if (ranking === undefined) {
+    ranking = 'apprentice';
+  } else {
+    for (let key in rankings) {
+      if (totalPoints > ranking[key]) {
+        ranking = key;
+      }
+    }
+  }
+
+  return ranking;
+}
+
+const updatePoints = (timeframe, limit, occurrence, totalPoints) => {
+
+  if (timeframe === 'Day') {
+    for (let i = 0; i < occurrence.length; i++) {
+      if (occurrence[i].value >= limit)
+        totalPoints += 10;
+    }
+  } else if (timeframe === 'Week') {
+    let interval = 7 * 24 * 3600 * 1000;
+    let dayOne = Date.parse(occurrence[0].timestamp);
+    let goalTotal = 0;
+    let goalMet = false;
+
+    for (let i = 0; i < occurrence.length; i++) {
+      let tsInMillisec = Date.parse(occurrence[i].timestamp);
+      if (dayOne + interval > tsInMillisec) {
+        goalTotal = occurrence[i].value;
+        if (goalTotal >= limit && !goalMet) {
+          totalPoints += 175;
+          goalMet = true;
+        }
+      } else {
+        goalMet = false;
+        goalTotal = 0;
+        dayOne += interval;
+        i--;
+      }
+    }
+  } else if (timeframe === 'Month') {
+    let day = occurrence[0].timestamp.slice(8, 2);
+    let month = occurrence[0].timestamp.slice(5, 2);
+    goalTotal = 0
+    let goalMet = false;
+
+    for (let i = 0; i < occurrence.length; i++) {
+      let currentMonth = occurrence.[i].timeframe.slice(5, 2);
+      let currentDay = occurrence.[i].timeframe.slice(8, 2);
+
+      if (currentMonth === month ||
+          (currentMonth === month + 1 ||
+           currentMonth === '1' && month === '12') &&
+          currentDay < day) {
+        goalTotal += occurrence[i].value;
+        if (goalTotal >= limit && !goalMet) {
+          totalPoints += 800;
+          goalMet = true;
+        }
+      } else {
+        if (month === '12') {
+          month = '1';
+        } else {
+          month = (Number(month) + 1).toString();
+        }
+        goalTotal = 0;
+        goalMet = false
+        i--;
+    }
+  }
+
+  totalPoints += occurrence.length * 50;
+}
+
+
+
 
 // UPDATE TITLE
 // if title is empty
