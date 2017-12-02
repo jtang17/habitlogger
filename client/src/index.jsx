@@ -324,17 +324,13 @@ class App extends React.Component {
               <MuiThemeProvider muiTheme={muiTheme}>
                 {habitCreateOrDataLogger}
               </MuiThemeProvider>
-            </div>
-            <div className="row rowB">
               <MuiThemeProvider muiTheme={muiTheme}>
                 <MuiTable habit={this.state.viewHabit}
                           timeframe={this.state.timeframe}
                           unit={this.state.unit}
                           limit={this.state.limit}
                           occurrences={this.state.occurrences}
-                          updateLogEntry={this.updateLogEntry}
-                          totalPoints={this.state.totalPoints}
-                          ranking={this.state.ranking} />
+                          updateLogEntry={this.updateLogEntry} />
               </MuiThemeProvider>
             </div>
             <div className="row rowC">

@@ -82,12 +82,7 @@ body {
 
 .rowB {
   margin-bottom: 30px;
-  margin-left: auto;
   margin-right: auto;
-}
-
-.row {
-  margin-left: auto;
 }
 
 .signup {
@@ -97,9 +92,10 @@ body {
 }
 
 .table {
-  clear: both;
-  padding: 30px;
+  float: right;
+  padding: 10px;
   margin-right: 40px;
+  max-width: 800px;
 }
 
 .viewHabitData {
