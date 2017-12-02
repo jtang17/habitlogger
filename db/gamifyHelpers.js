@@ -1,9 +1,9 @@
 const rankings = {
-  apprentice: 0,
-  yeoman: 500,
-  guide: 1500,
-  guru: 5000,
-  master: 10000,
+  Apprentice: 0,
+  Yeoman: 500,
+  Guide: 1500,
+  Guru: 5000,
+  Master: 10000,
 }
 
 const updateRanking = (totalPoints, ranking) => {

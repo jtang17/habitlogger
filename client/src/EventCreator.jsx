@@ -72,7 +72,7 @@ class EventCreator extends React.Component{
 
           <TextField hintText="Habit units" onChange={this.elementChange} name="units"/>
 
-          <TextField type="number" hintText="Goal" onChange={this.elementChange} name="limit"/>
+          <TextField type="number" min="0" hintText="Goal" onChange={this.elementChange} name="limit"/>
 
           <SelectField
             floatingLabelText="Choose Timeframe"
