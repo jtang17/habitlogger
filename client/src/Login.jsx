@@ -174,13 +174,13 @@ class Login extends React.Component {
           </div>
           <div className="row footerRow">
             <div className="col-md-4 footer">
-              <h3 className="footerNames"><a href="https://github.com/pray4mojo">Brian Binder</a></h3>
+              <h3 className="footerNames"><a href="https://github.com/pray4mojo" target="_new">Brian Binder</a></h3>
             </div>
             <div className="col-md-4 footer">
-              <h3 className="footerNames"><a href="https://github.com/cakelyn">Kate Stamas</a></h3>
+              <h3 className="footerNames"><a href="https://github.com/cakelyn" target="_new">Kate Stamas</a></h3>
             </div>
             <div className="col-md-4 footer">
-              <h3 className="footerNames"><a href="https://github.com/huynhr">Ray Huynh</a></h3>
+              <h3 className="footerNames"><a href="https://github.com/huynhr" target="_new">Ray Huynh</a></h3>
             </div>
           </div>
         </div>

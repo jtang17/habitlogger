@@ -78,7 +78,7 @@ class MuiTable extends React.Component {
     let firstLetter;
     if (this.props.ranking) {
       const firstLetter = this.props.ranking.slice(0, 1);
-      if (firstLetter === 'a' || firstLetter === 'e' || firstLetter === 'i' || firstLetter === 'o' || firstLetter === 'u') {
+      if (firstLetter === 'A' || firstLetter === 'E' || firstLetter === 'I' || firstLetter === 'O' || firstLetter === 'U') {
         article = 'an';
       }
     }

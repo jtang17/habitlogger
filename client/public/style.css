@@ -137,7 +137,7 @@ body {
 
 .footerRow {
   background-color: #673AB7;
-  height: 100px;
+  height: 100px auto;
 }
 .footer {
   text-align: center;

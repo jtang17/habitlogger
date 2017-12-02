@@ -99,7 +99,8 @@ class Chart extends React.Component {
       <div id="chart">
         <Paper zDepth={1}>
           <AppBar title={`${this.props.habit} over the past ${this._maxDay} days`} style={style.appBar} showMenuIconButton={false} />
-          <p>Share your progress!<Social /></p>
+          <p>Share your progress!</p>
+          <Social />
           <Line data={this.data} options={this._options}/>
         </Paper>
       </div>
