@@ -11,34 +11,14 @@ class Login extends React.Component {
       loginPassword: '',
       signupUsername: '',
       signupPassword: '',
+      signupView: false
     }
-    this.handleLoginUser = this.handleLoginUser.bind(this);
-    this.handleLoginPassword = this.handleLoginPassword.bind(this);
-    this.handleSignupUser = this.handleSignupUser.bind(this);
-    this.handleSignupPassword = this.handleSignupPassword.bind(this);
+    this.elementChange = this.elementChange.bind(this);
   }
 
-  handleLoginUser(e) {
+  elementChange(e) {
     this.setState({
-      loginUsername: e.target.value,
-    })
-  }
-
-  handleLoginPassword(e) {
-    this.setState({
-      loginPassword: e.target.value,
-    })
-  }
-
-  handleSignupUser(e) {
-    this.setState({
-      signupUsername: e.target.value,
-    })
-  }
-
-  handleSignupPassword(e) {
-    this.setState({
-      signupPassword: e.target.value,
+      [e.target.name]: e.target.value
     })
   }
 
@@ -53,14 +33,16 @@ class Login extends React.Component {
               <TextField
                 hintText="Enter Username"
                 floatingLabelText="Username"
-                onChange={this.handleLoginUser}
+                name="loginUsername"
+                onChange={this.elementChange}
                />
                <br />
               <TextField
                 type="password"
                 hintText="Enter Password"
                 floatingLabelText="Password"
-                onChange={this.handleLoginPassword}
+                name="loginPassword"
+                onChange={this.elementChange}
                />
                <br />
               <RaisedButton label="LOGIN" primary={true} onClick={this.props.login.bind(this, this.state.loginUsername, this.state.loginPassword)} />
@@ -73,14 +55,16 @@ class Login extends React.Component {
               <TextField
                 hintText="Enter Username"
                 floatingLabelText="Username"
-                onChange={this.handleSignupUser}
+                name="signupUsername"
+                onChange={this.elementChange}
               />
               <br />
               <TextField
                 type="password"
                 hintText="Enter Password"
                 floatingLabelText="Password"
-                onChange={this.handleSignupPassword}
+                name="signupPassword"
+                onChange={this.elementChange}
               />
               <br />
               <RaisedButton label="SIGNUP" primary={true} onClick={this.props.signup.bind(this, this.state.signupUsername, this.state.signupPassword)}/>
