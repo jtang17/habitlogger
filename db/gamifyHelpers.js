@@ -11,7 +11,7 @@ const updateRanking = (totalPoints, ranking) => {
     ranking = 'apprentice';
   } else {
     for (let key in rankings) {
-      if (totalPoints > ranking[key]) {
+      if (totalPoints > rankings[key]) {
         ranking = key;
       }
     }
@@ -21,7 +21,8 @@ const updateRanking = (totalPoints, ranking) => {
 }
 
 const updatePoints = (timeframe, limit, occurrence, totalPoints) => {
-  console.log('is updatePoints running?');
+  console.log('what is occurence when deleted: ', occurrence)
+  console.log('timeFrame: ', timeframe);
 
   if (timeframe === 'Day') {
     for (let i = 0; i < occurrence.length; i++) {
@@ -37,8 +38,10 @@ const updatePoints = (timeframe, limit, occurrence, totalPoints) => {
     for (let i = 0; i < occurrence.length; i++) {
       let tsInMillisec = Date.parse(occurrence[i].timestamp);
       if (dayOne + interval > tsInMillisec) {
-        goalTotal = occurrence[i].value;
+        console.log('condisitional on line 39')
+        goalTotal += occurrence[i].value;
         if (goalTotal >= limit && !goalMet) {
+        console.log('conditional on line 42')
           totalPoints += 175;
           goalMet = true;
         }
@@ -50,19 +53,20 @@ const updatePoints = (timeframe, limit, occurrence, totalPoints) => {
       }
     }
   } else if (timeframe === 'Month') {
-    let day = occurrence[0].timestamp.slice(8, 2);
-    let month = occurrence[0].timestamp.slice(5, 2);
+
+    let day = JSON.stringify(occurrence[0].timestamp).slice(8, 2);
+    let month = JSON.stringify(occurrence[0].timestamp).slice(5, 2);
     goalTotal = 0
     let goalMet = false;
 
     for (let i = 0; i < occurrence.length; i++) {
-      let currentMonth = occurrence[i].timeframe.slice(5, 2);
-      let currentDay = occurrence[i].timeframe.slice(8, 2);
+      let currentMonth = JSON.stringify(occurrence[i].timestamp).slice(5, 2);
+      let currentDay = JSON.stringify(occurrence[i].timestamp).slice(8, 2);
 
       if (currentMonth === month ||
-          (currentMonth === month + 1 ||
-           currentMonth === '1' && month === '12') &&
-          currentDay < day) {
+          (Number(currentMonth) === Number(month) + 1 ||
+           currentMonth === '01' && month === '12') &&
+          Number(currentDay) < Number(day)) {
         goalTotal += occurrence[i].value;
         if (goalTotal >= limit && !goalMet) {
           totalPoints += 800;
@@ -70,7 +74,7 @@ const updatePoints = (timeframe, limit, occurrence, totalPoints) => {
         }
       } else {
         if (month === '12') {
-          month = '1';
+          month = '01';
         } else {
           month = (Number(month) + 1).toString();
         }
@@ -81,7 +85,8 @@ const updatePoints = (timeframe, limit, occurrence, totalPoints) => {
     }
   }
 
-  return totalPoints += occurrence.length * 50;
+  totalPoints += occurrence.length * 50 + 10;
+  return totalPoints
 }
 
 module.exports.updateRanking = updateRanking;
