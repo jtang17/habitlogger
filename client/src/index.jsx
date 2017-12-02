@@ -66,6 +66,7 @@ class App extends React.Component {
           if (res.data) {
             this.setState({
               username: res.data,
+              createHabitView: true
             });
           } else {
             alert('Failed to sign up. Username possibly taken.');
@@ -113,7 +114,8 @@ class App extends React.Component {
             limit: undefined,
             occurrences: [],
             viewData: true,
-            viewHabit: ''
+            viewHabit: '',
+            createHabitView: true
           });
         } else {
           if (cb) {

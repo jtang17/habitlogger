@@ -8,7 +8,7 @@
         "habit":"rolling",
         "limit":5,
         "unit":"rolls",
-        "timeframe":"day",
+        "timeframe":"Day",
         "occurrences":[{
           "timestamp":"2017-11-22T14:34:15.075Z",
           "value":"1"
@@ -18,7 +18,7 @@
         "habit":"smoking",
         "limit":5,
         "unit":"packs",
-        "timeframe":"day",
+        "timeframe":"Day",
         "occurrences":
         [
           {
@@ -39,7 +39,7 @@
         "habit":"Video Games",
         "limit":25,
         "unit":"hours",
-        "timeframe":"week",
+        "timeframe":"Week",
         "occurrences":
         [
           {
@@ -75,7 +75,7 @@
         "habit":"zen",
         "limit":3,
         "unit":"enlightenment",
-        "timeframe":"week",
+        "timeframe":"Week",
         "occurrences":[{
           "timestamp":"2017-12-31T14:34:15.075Z",
           "value":"2"
@@ -85,7 +85,7 @@
         "habit":"studying",
         "limit":5,
         "unit":"hours",
-        "timeframe":"day",
+        "timeframe":"Day",
         "occurrences":
         [
           {
