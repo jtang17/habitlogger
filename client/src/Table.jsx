@@ -14,7 +14,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 const style = {
   paper: {
-    height: '600px',
+    height: '640px',
     padding: '20px',
   }
 }
@@ -77,7 +77,7 @@ class MuiTable extends React.Component {
     let article = 'a';
     let firstLetter;
     if (this.props.ranking) {
-      const firstLetter = this.props.ranking.slice(0, 1);
+      const firstLetter = this.props.ranking.slice(0, 1).toUpperCase();
       if (firstLetter === 'A' || firstLetter === 'E' || firstLetter === 'I' || firstLetter === 'O' || firstLetter === 'U') {
         article = 'an';
       }

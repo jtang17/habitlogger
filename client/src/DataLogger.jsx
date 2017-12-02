@@ -78,7 +78,7 @@ class DataLogger extends React.Component {
   render() {
     const style = {
       dataLogger: {
-        height: 600,
+        height: 640,
         width: 400,
         padding: '20px',
         margin: '0 auto',
@@ -139,10 +139,10 @@ class DataLogger extends React.Component {
           <br />
 
           <RaisedButton label="Log!" primary={true} onClick={this.checkDupe} style={style.logButton} />
-          <RaisedButton label="Create new habit" primary={true} onClick={this.props.changeCreateHabitView} style={style.createHButton} />
+          <RaisedButton label="Create new habit" primary={false} onClick={this.props.changeCreateHabitView} style={style.createHButton} />
           <br />
           {this.state.currentHabit ?
-            <RaisedButton label="Delete this habit" primary={false} onClick={this.props.deleteHabit} style={style.deleteButton} />
+            <RaisedButton label="Delete this habit" primary={true} onClick={this.props.deleteHabit} style={style.deleteButton} />
             : null}
         </Paper>
       </div>
