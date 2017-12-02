@@ -36,7 +36,7 @@ class Login extends React.Component {
       alert('Password entries must match');
       this.resetLoginFields();
     } else {
-      this.props.login(this.state.loginUsername, this.state.loginPassword);
+      this.props.signup(this.state.signupUsername, this.state.signupPassword);
     }
   }
 

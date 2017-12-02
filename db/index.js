@@ -219,7 +219,7 @@ const updateLog = (log, cb) => {
         }
       });
       // update the points
-      habitToUpdate.totalPoints = game.updatePoints(habitToUpdate.timeframe, habitToUpdate.limit, habitToUpdate.occurences, 0);
+      habitToUpdate.totalPoints = game.updatePoints(habitToUpdate.timeframe, habitToUpdate.limit, habitToUpdate.occurrences, 0);
       // update the ranking
       habitToUpdate.ranking = game.updateRanking(habitToUpdate.totalPoints, habitToUpdate.ranking);
       // save the userEntry and return the callback
@@ -248,7 +248,7 @@ const deleteLog = (log, cb) => {
         }
       });
       // update the points
-      habitToUpdate.totalPoints = game.updatePoints(habitToUpdate.timeframe, habitToUpdate.limit, habitToUpdate.occurences, 0);
+      habitToUpdate.totalPoints = game.updatePoints(habitToUpdate.timeframe, habitToUpdate.limit, habitToUpdate.occurrences, 0);
       // update the ranking
       habitToUpdate.ranking = game.updateRanking(habitToUpdate.totalPoints, habitToUpdate.ranking);
       // save new updates to the db
