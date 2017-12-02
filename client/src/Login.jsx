@@ -143,11 +143,11 @@ class Login extends React.Component {
       <MuiThemeProvider muiTheme={this.props.muiTheme}>
         <div>
           <div className="row" id="rowWithBackground">
-            <div className="loginSignup">
+            <div className="loginSignup col-md-2">
               {loginOrSignupView}
-              <div className="col-md-4 icon">
-
-              </div>
+            </div>
+            <div>
+              <h1 className="col-md-10">reHabit</h1>
             </div>
           </div>
           <div className="quote">
