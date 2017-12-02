@@ -3,6 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -109,7 +110,7 @@ class Login extends React.Component {
             </div>
     }
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={this.props.muiTheme}>
         <div>
           <div className="row loginSignup">
             <h1>Login or Signup to start logging</h1>

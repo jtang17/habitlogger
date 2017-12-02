@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import {deepPurple500} from 'material-ui/styles/colors';
 import TopBar from './TopBar.jsx';
 import MuiTable from './Table.jsx';
 import Chart from './Chart.jsx';
@@ -10,6 +12,13 @@ import axios from 'axios';
 import Login from './Login.jsx';
 import EventCreator from './EventCreator.jsx';
 import EventSelector from './EventSelector.jsx';
+
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: deepPurple500,
+    primary2Color: deepPurple500
+  }
+});
 
 class App extends React.Component {
   constructor(props) {
@@ -303,21 +312,21 @@ class App extends React.Component {
     }
     return (
       <div className="container-fluid">
-        <MuiThemeProvider>
+        <MuiThemeProvider muiTheme={muiTheme}>
           <TopBar logout={this.logout} loggedIn={this.state.username} />
         </MuiThemeProvider>
         {!this.state.username ?
-        <Login login={this.login} signup={this.signup} />
+        <Login login={this.login} signup={this.signup} muiTheme={muiTheme} />
         : null}
         {this.state.username ?
           <div className="main">
             <div className="row rowA">
-              <MuiThemeProvider>
+              <MuiThemeProvider muiTheme={muiTheme}>
                 {habitCreateOrDataLogger}
               </MuiThemeProvider>
             </div>
             <div className="row rowB">
-              <MuiThemeProvider>
+              <MuiThemeProvider muiTheme={muiTheme}>
                 <MuiTable habit={this.state.viewHabit}
                           timeframe={this.state.timeframe}
                           unit={this.state.unit}
