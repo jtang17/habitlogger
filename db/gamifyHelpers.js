@@ -21,8 +21,6 @@ const updateRanking = (totalPoints, ranking) => {
 }
 
 const updatePoints = (timeframe, limit, occurrence, totalPoints) => {
-  console.log('what is occurence when deleted: ', occurrence)
-  console.log('timeFrame: ', timeframe);
 
   if (timeframe === 'Day') {
     for (let i = 0; i < occurrence.length; i++) {
@@ -38,10 +36,8 @@ const updatePoints = (timeframe, limit, occurrence, totalPoints) => {
     for (let i = 0; i < occurrence.length; i++) {
       let tsInMillisec = Date.parse(occurrence[i].timestamp);
       if (dayOne + interval > tsInMillisec) {
-        console.log('condisitional on line 39')
         goalTotal += occurrence[i].value;
         if (goalTotal >= limit && !goalMet) {
-        console.log('conditional on line 42')
           totalPoints += 175;
           goalMet = true;
         }
