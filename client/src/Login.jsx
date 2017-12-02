@@ -11,10 +11,13 @@ class Login extends React.Component {
       loginPassword: '',
       signupUsername: '',
       signupPassword: '',
+      signupPassword2: '',
       loginView: true
     }
     this.elementChange = this.elementChange.bind(this);
     this.changeLoginView = this.changeLoginView.bind(this);
+    this.resetLoginFields = this.resetLoginFields.bind(this);
+    this.handleSignupClick = this.handleSignupClick.bind(this);
   }
 
   elementChange(e) {
@@ -28,6 +31,26 @@ class Login extends React.Component {
     });
   }
 
+  handleSignupClick() {
+    if (this.state.signupPassword !== this.state.signupPassword2) {
+      alert('Password entries must match');
+      this.resetLoginFields();
+    } else {
+      this.props.login(this.state.loginUsername, this.state.loginPassword);
+    }
+  }
+
+  resetLoginFields() {
+    this.setState({
+      loginUsername: '',
+      loginPassword: '',
+      signupUsername: '',
+      signupPassword: '',
+      signupPassword2: ''
+    });
+    console.log('it is running at least');
+  }
+
   render() {
     let loginOrSignupView
     if (this.state.loginView) {
@@ -37,6 +60,7 @@ class Login extends React.Component {
                 hintText="Enter Username"
                 floatingLabelText="Username"
                 name="loginUsername"
+                value={this.state.loginUsername}
                 onChange={this.elementChange}
                />
                <br />
@@ -45,6 +69,7 @@ class Login extends React.Component {
                 hintText="Enter Password"
                 floatingLabelText="Password"
                 name="loginPassword"
+                value={this.state.loginPassword}
                 onChange={this.elementChange}
                />
                <br />
@@ -58,6 +83,7 @@ class Login extends React.Component {
                 hintText="Enter Username"
                 floatingLabelText="Username"
                 name="signupUsername"
+                value={this.state.signupUsername}
                 onChange={this.elementChange}
               />
               <br />
@@ -66,10 +92,20 @@ class Login extends React.Component {
                 hintText="Enter Password"
                 floatingLabelText="Password"
                 name="signupPassword"
+                value={this.state.signupPassword}
                 onChange={this.elementChange}
               />
               <br />
-              <RaisedButton label="SIGNUP" primary={true} onClick={this.props.signup.bind(this, this.state.signupUsername, this.state.signupPassword)}/>
+              <TextField
+                type="password"
+                hintText="Verify Password"
+                floatingLabelText="Re-enter Password"
+                name="signupPassword2"
+                value={this.state.signupPassword2}
+                onChange={this.elementChange}
+              />
+              <br />
+              <RaisedButton label="SIGNUP" primary={true} onClick={this.handleSignupClick}/>
               <RaisedButton label="Go back to login" primary={true} onClick={this.changeLoginView} />
             </div>
     }
