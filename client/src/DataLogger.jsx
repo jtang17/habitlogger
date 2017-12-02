@@ -5,6 +5,8 @@ import DatePicker from 'material-ui/DatePicker';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Paper from 'material-ui/Paper';
+import AppBar from 'material-ui/AppBar'
 
 class DataLogger extends React.Component {
   constructor(props) {
@@ -75,42 +77,90 @@ class DataLogger extends React.Component {
   }
 
   render() {
+    const style = {
+      dataLogger: {
+        height: 420,
+        width: 300,
+        margin: '0 auto',
+        textAlign: 'center',
+        display: 'inline-block',
+        position: 'relative'
+      },
+      eventCreator: {
+        height: 420,
+        width: 300,
+        margin: '0 auto',
+        textAlign: 'center',
+        display: 'inline-block',
+        position: 'relative'
+      },
+      login: {
+        height: 400,
+        width: 300,
+        margin: '0 auto',
+        textAlign: 'center',
+        display: 'inline-block',
+        position: 'relative'
+      },
+      logButton: {
+        margin: 10,
+        position: 'absolute',
+        bottom: '50px',
+        left: '10px'
+      },
+      createHButton: {
+        margin: 10,
+        position: 'absolute',
+        bottom: '50px',
+        right: '10px'
+      },
+      deleteButton: {
+        margin: 10,
+        position: 'absolute',
+        bottom: '5px',
+        right: '10px',
+      },
+      appBar: {
+        textAlign: 'center'
+      }
+    };
     return (
       <div className="dataLogger">
+        <Paper style={style.dataLogger} zDepth={1}>
+          <AppBar title="Log your habit" style={style.appBar} showMenuIconButton={false} />
 
-        <h1>Data Logger</h1>
+          <SelectField
+            floatingLabelText="Select Habit"
+            value={this.state.value}
+            errorText={this.props.errorText}
+            onChange={this.habitChange}>
+            {this.props.habits.map( (event, index) => {
+              return <MenuItem key={index} value={index} primaryText={event} />
+            })}
+          </SelectField>
+          <br />
 
-        <SelectField
-          floatingLabelText="Select Habit"
-          value={this.state.value}
-          errorText={this.props.errorText}
-          onChange={this.habitChange}>
-          {this.props.habits.map( (event, index) => {
-            return <MenuItem key={index} value={index} primaryText={event} />
-          })}
-        </SelectField>
-        <br />
+          <DatePicker autoOk={true}
+                      hintText="Select Date"
+                      container="inline"
+                      mode="landscape"
+                      value={this.state.habitTime}
+                      onChange={ (x, day) => this.dateChange(x,day) } />
 
-        <DatePicker autoOk={true}
-                    hintText="Select Date"
-                    container="inline"
-                    mode="landscape"
-                    value={this.state.habitTime}
-                    onChange={ (x, day) => this.dateChange(x,day) } />
+          <TextField type="number"
+                     min="0"
+                     hintText="How many?"
+                     errorText={this.props.errorText}
+                     onChange={this.quantityChange} />
+          <br />
 
-        <TextField type="number"
-                   min="0"
-                   hintText="How many?"
-                   errorText={this.props.errorText}
-                   onChange={this.quantityChange} />
-        <br />
-
-        <RaisedButton label="Log!" primary={true} onClick={this.checkDupe} />
-        <RaisedButton label="Create new habit" primary={true} onClick={this.props.changeCreateHabitView} />
-        <br />
-        {this.state.currentHabit ?
-          <RaisedButton label="Delete this habit" primary={true} onClick={this.props.deleteHabit} />
-          : null}
+          <RaisedButton label="Log!" primary={true} onClick={this.checkDupe} style={style.logButton} />
+          <RaisedButton label="Create new habit" primary={true} onClick={this.props.changeCreateHabitView} style={style.createHButton} />
+          <br />
+          {this.state.currentHabit ?
+            <RaisedButton label="Delete this habit" primary={false} onClick={this.props.deleteHabit} style={style.deleteButton} />
+            : null}
+        </Paper>
       </div>
     )
   }
