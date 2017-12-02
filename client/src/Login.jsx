@@ -48,7 +48,6 @@ class Login extends React.Component {
       signupPassword: '',
       signupPassword2: ''
     });
-    console.log('it is running at least');
   }
 
   render() {
