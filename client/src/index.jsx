@@ -22,7 +22,9 @@ class App extends React.Component {
       viewHabit: '',
       errorText: '',
       createHabitView: false,
-      occurrences: []
+      occurrences: [],
+      totalPoints: 0,
+      ranking: ''
     }
     this.login = this.login.bind(this);
     this.signup = this.signup.bind(this);
@@ -138,6 +140,8 @@ class App extends React.Component {
           unit: res.data.unit,
           limit: res.data.limit,
           occurrences: res.data.occurrences,
+          totalPoints: res.data.totalPoints,
+          ranking: res.data.ranking,
           viewData: true,
         }, () => {
           if (cb) {
