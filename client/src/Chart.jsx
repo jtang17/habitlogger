@@ -1,5 +1,6 @@
 import React from 'react';
 import {Line} from 'react-chartjs-2';
+import Social from './socialSharing.jsx';
 import moment from 'moment';
 
 class Chart extends React.Component {
@@ -90,6 +91,8 @@ class Chart extends React.Component {
     return (
       <div id="chart">
         <h3>{this.props.habit} over the past {this._maxDay} days</h3>
+        <p>Share your progress!</p>
+        <Social />
         <Line data={this.data} options={this._options}/>
       </div>
     );

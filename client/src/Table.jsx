@@ -26,7 +26,6 @@ class MuiTable extends React.Component {
     this.handleModifyClick = this.handleModifyClick.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
     this.handleUpdateClick = this.handleUpdateClick.bind(this);
-    this.handleDeleteClick = this.handleDeleteClick.bind(this);
   }
 
   handleRowSelection(sel) {
@@ -66,10 +65,6 @@ class MuiTable extends React.Component {
     this.props.updateLogEntry(time, quantity);
   }
 
-  handleDeleteClick() {
-    this.props.updateLogEntry(time, '0');
-  }
-
   render() {
     return (
       <div className="table">
@@ -102,8 +97,7 @@ class MuiTable extends React.Component {
         {this.state.showUpdateDelete ?
           <UpdateDelete quantity={this.state.quantity}
                         updateQuantity={this.updateQuantity}
-                        handleUpdateClick={this.handleUpdateClick}
-                        handleDeleteClick={this.handleDeleteClick} />
+                        handleUpdateClick={this.handleUpdateClick} />
           : null
         }
       </div>
