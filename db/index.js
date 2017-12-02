@@ -3,6 +3,7 @@ const saltRounds = 10;
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const User = require('./schemas.js');
+const game = require('./gamifyHelpers.js');
 const DB_URI = process.env.MONGODB_URI ? `${process.env.MONGODB_URI}/stoneandsand` : 'mongodb://localhost/stoneandsand';
 mongoose.Promise = require('bluebird');
 mongoose.connect(DB_URI);
@@ -114,6 +115,8 @@ const createHabit = (habitData, cb) => {
         limit: habitData.limit,
         unit: habitData.unit,
         timeframe: habitData.timeframe,
+        ranking: 'apprentice',
+        totalPoints: 0
       });
       userEntry.save((err, updatedUserEntry) => {
         if (err) {
@@ -139,9 +142,9 @@ const logOccurrence = (logData, cb) => {
         if (logData.habit === habitEntry.habit) {
           habitEntry.occurrences.push(logData.occurrence);
           // update the points of the user
-          updatePoints(habitEntry.timeframe, habitEntry.limit, habitEntry.occurrences, habitEntry.totalPoints)
+          habitEntry.totalPoints = game.updatePoints(habitEntry.timeframe, habitEntry.limit, habitEntry.occurrences, 0);
           // update the ranking of the user
-          updateRanking(habitEntry.totalPoints, habitEntry.ranking)
+          habitEntry.ranking = game.updateRanking(habitEntry.totalPoints, habitEntry.ranking)
           userEntry.save((err, updatedUserEntry) => {
             if (err) {
               console.error(`Error getting ${user}.`);
@@ -216,9 +219,9 @@ const updateLog = (log, cb) => {
         }
       });
       // update the points
-      updatePoints(habitToUpdate.timeframe, habitToUpdate.limit, habitToUpdate.occurences, habitToUpdate.totalPoints);
+      habitToUpdate.totalPoints = game.updatePoints(habitToUpdate.timeframe, habitToUpdate.limit, habitToUpdate.occurences, 0);
       // update the ranking
-      updateRanking(habitToUpdate.totalPoints, habitToUpdate.ranking);
+      habitToUpdate.ranking = game.updateRanking(habitToUpdate.totalPoints, habitToUpdate.ranking);
       // save the userEntry and return the callback
       userEntry.save((err) => {
         if (err) {
@@ -245,9 +248,9 @@ const deleteLog = (log, cb) => {
         }
       });
       // update the points
-      updatePoints(habitToUpdate.timeframe, habitToUpdate.limit, habitToUpdate.occurences, habitToUpdate.totalPoints);
+      habitToUpdate.totalPoints = game.updatePoints(habitToUpdate.timeframe, habitToUpdate.limit, habitToUpdate.occurences, 0);
       // update the ranking
-      updateRanking(habitToUpdate.totalPoints, habitToUpdate.ranking);
+      habitToUpdate.ranking = game.updateRanking(habitToUpdate.totalPoints, habitToUpdate.ranking);
       // save new updates to the db
       userEntry.save((err) => {
       // return callback of true or false
