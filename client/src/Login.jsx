@@ -11,9 +11,10 @@ class Login extends React.Component {
       loginPassword: '',
       signupUsername: '',
       signupPassword: '',
-      signupView: false
+      loginView: true
     }
     this.elementChange = this.elementChange.bind(this);
+    this.changeLoginView = this.changeLoginView.bind(this);
   }
 
   elementChange(e) {
@@ -21,14 +22,16 @@ class Login extends React.Component {
       [e.target.name]: e.target.value
     })
   }
+  changeLoginView() {
+    this.setState({
+      loginView: !this.state.loginView
+    });
+  }
 
   render() {
-    return (
-      <MuiThemeProvider>
-        <div>
-          <div className="row loginSignup">
-            <h1>Login or Signup to start logging</h1>
-            <div className="login col-md-4">
+    let loginOrSignupView
+    if (this.state.loginView) {
+      loginOrSignupView = <div className="login col-md-4">
               <h4>Log In</h4>
               <TextField
                 hintText="Enter Username"
@@ -46,11 +49,10 @@ class Login extends React.Component {
                />
                <br />
               <RaisedButton label="LOGIN" primary={true} onClick={this.props.login.bind(this, this.state.loginUsername, this.state.loginPassword)} />
+              <RaisedButton label="Signup as new user" primary={true} onClick={this.changeLoginView} />
             </div>
-            <div className="col-md-4 icon">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Social_Network_Analysis_Visualization.png" />
-            </div>
-            <div className="signup col-md-4">
+    } else {
+      loginOrSignupView = <div className="signup col-md-4">
               <h4>Sign Up</h4>
               <TextField
                 hintText="Enter Username"
@@ -68,7 +70,19 @@ class Login extends React.Component {
               />
               <br />
               <RaisedButton label="SIGNUP" primary={true} onClick={this.props.signup.bind(this, this.state.signupUsername, this.state.signupPassword)}/>
+              <RaisedButton label="Go back to login" primary={true} onClick={this.changeLoginView} />
             </div>
+    }
+    return (
+      <MuiThemeProvider>
+        <div>
+          <div className="row loginSignup">
+            <h1>Login or Signup to start logging</h1>
+            {loginOrSignupView}
+            <div className="col-md-4 icon">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Social_Network_Analysis_Visualization.png" />
+            </div>
+
           </div>
           <div className="quote">
             <h1>"He who controls others may be powerful, but he who has mastered himself is mightier still."</h1>
