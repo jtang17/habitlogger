@@ -158,8 +158,8 @@ class Login extends React.Component {
             <div className="col-md-4 features">
               <h2>Improve yourself</h2>
               <p>Set goals</p>
-              <p>Make new Habits</p>
-              <p>Track you success</p>
+              <p>Make new habits</p>
+              <p>Track your success</p>
             </div>
             <div className="col-md-4 icon">
               <img src="https://www.analyticsinsight.net/wp-content/uploads/2017/09/data-visualization-tools-concept.png" />
@@ -168,7 +168,7 @@ class Login extends React.Component {
               <h2>Features</h2>
               <p>Track your habits</p>
               <p>Easily visualize your progress</p>
-              <p>Level up rankings to become a master</p>
+              <p>Level up rankings to become a Master</p>
             </div>
           </div>
         </div>
