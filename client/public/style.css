@@ -130,3 +130,27 @@ body {
   margin-top: 150px;
   font-size: 115px;
 }
+
+.subHero {
+  color: white;
+}
+
+.footerRow {
+  background-color: #673AB7;
+  height: 100px;
+}
+.footer {
+  text-align: center;
+  padding: 15px;
+}
+
+.footerNames {
+  display: inline-block;
+  margin: 15px;
+  color: white;
+}
+
+a {
+  text-decoration: none !important;
+  color: white;
+}

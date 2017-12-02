@@ -144,6 +144,7 @@ class Login extends React.Component {
           <div className="row" id="rowWithBackground">
             <div className="col-md-8 features">
               <h1 className="hero titleHero">reHabit</h1>
+              <h3 className="subHero">creating a new you</h3>
             </div>
             <div className="loginSignup col-md-4">
               {loginOrSignupView}
@@ -169,6 +170,17 @@ class Login extends React.Component {
               <p>Track your habits</p>
               <p>Easily visualize your progress</p>
               <p>Level up rankings to become a Master</p>
+            </div>
+          </div>
+          <div className="row footerRow">
+            <div className="col-md-4 footer">
+              <h3 className="footerNames"><a href="https://github.com/pray4mojo">Brian Binder</a></h3>
+            </div>
+            <div className="col-md-4 footer">
+              <h3 className="footerNames"><a href="https://github.com/cakelyn">Kate Stamas</a></h3>
+            </div>
+            <div className="col-md-4 footer">
+              <h3 className="footerNames"><a href="https://github.com/huynhr">Ray Huynh</a></h3>
             </div>
           </div>
         </div>
