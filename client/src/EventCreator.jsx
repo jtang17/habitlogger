@@ -38,24 +38,8 @@ class EventCreator extends React.Component{
 
   render() {
     const style = {
-      dataLogger: {
-        height: 420,
-        width: 300,
-        margin: '0 auto',
-        textAlign: 'center',
-        display: 'inline-block',
-        position: 'relative'
-      },
       eventCreator: {
         height: 420,
-        width: 300,
-        margin: '0 auto',
-        textAlign: 'center',
-        display: 'inline-block',
-        position: 'relative'
-      },
-      login: {
-        height: 400,
         width: 300,
         margin: '0 auto',
         textAlign: 'center',
@@ -73,11 +57,6 @@ class EventCreator extends React.Component{
         position: 'absolute',
         bottom: '50px',
         right: '10px'
-      },
-      deleteButton: {
-        margin: 10,
-        position: 'absolute',
-        bottom: '10px'
       },
       appBar: {
         textAlign: 'center'

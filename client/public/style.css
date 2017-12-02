@@ -3,8 +3,10 @@ body {
 }
 
 #chart {
-  margin: 0 auto;
+  /*margin: 0 auto;*/
   padding: 30px;
+  max-width: 1000px;
+  max-height: 700px;
 }
 
 .container-fluid {

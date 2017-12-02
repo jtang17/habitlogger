@@ -86,22 +86,6 @@ class DataLogger extends React.Component {
         display: 'inline-block',
         position: 'relative'
       },
-      eventCreator: {
-        height: 420,
-        width: 300,
-        margin: '0 auto',
-        textAlign: 'center',
-        display: 'inline-block',
-        position: 'relative'
-      },
-      login: {
-        height: 400,
-        width: 300,
-        margin: '0 auto',
-        textAlign: 'center',
-        display: 'inline-block',
-        position: 'relative'
-      },
       logButton: {
         margin: 10,
         position: 'absolute',
