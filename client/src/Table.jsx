@@ -14,6 +14,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 const style = {
   paper: {
+    height: '600px',
     padding: '20px',
   }
 }
