@@ -49,8 +49,9 @@ body {
 #rowWithBackground {
   background-image: url('/assets/sanfran.jpeg');
   background-repeat: no-repeat;
-  background-position: 50% 50%;
+  background-position: 70% 30%;
   background-size: cover;
+  height: 500px;
 }
 .login {
   margin-top: 50px;

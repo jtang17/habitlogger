@@ -65,7 +65,7 @@ class Login extends React.Component {
       login: {
         height: 270,
         width: 300,
-        margin: 100,
+        margin: '400 10 400 10',
         textAlign: 'center',
         display: 'inline-block'
       },
