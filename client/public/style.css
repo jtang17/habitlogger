@@ -3,7 +3,6 @@ body {
 }
 
 #chart {
-  border: solid;
   margin: 0 auto;
   padding: 30px;
 }
@@ -18,7 +17,6 @@ body {
 }
 
 .dataLogger {
-  border: solid;
   float: left;
   margin-right: 40px;
   padding: 30px;
@@ -29,7 +27,6 @@ body {
 }
 
 .eventCreator {
-  border: solid;
   clear: both;
   float: left;
   margin-right: 40px;
@@ -74,12 +71,17 @@ body {
 
 .rowA {
   margin-bottom: 40px;
+  margin-left: auto;
 }
 
 .rowB {
   margin-bottom: 30px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.row {
+  margin-left: auto;
 }
 
 .signup {
@@ -89,13 +91,14 @@ body {
 }
 
 .table {
-  border: solid;
   clear: both;
   padding: 30px;
+  margin-right: 40px;
 }
 
 .viewHabitData {
   border: solid;
+  border-color: #311B92;
   float: left;
   padding: 30px;
 }

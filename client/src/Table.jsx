@@ -66,10 +66,20 @@ class MuiTable extends React.Component {
   }
 
   render() {
+    let article = 'a';
+    let firstLetter;
+    if (this.props.ranking) {
+      const firstLetter = this.props.ranking.slice(0, 1);
+      if (firstLetter === 'a' || firstLetter === 'e' || firstLetter === 'i' || firstLetter === 'o' || firstLetter === 'u') {
+        article = 'an';
+      }
+    }
+
     return (
       <div className="table">
-        <h1 className="tableName">{this.props.habit}</h1>
-        <h2 className="limitInfo">You set your goal to {this.props.limit} {this.props.unit} per {this.props.timeframe}</h2>
+        <h1 className="tableName">You are {article} {this.props.ranking} at {this.props.habit}</h1>
+        <h3 className="pointDisplay">You have earned {this.props.totalPoints} points!</h3>
+        <h3 className="limitInfo">You set your goal to {this.props.limit} {this.props.unit} per {this.props.timeframe}</h3>
         <Table height={this.state.height} width={this.state.width} onRowSelection={this.handleRowSelection}>
           <TableHeader displaySelectAll={false}>
             <TableRow>

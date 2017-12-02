@@ -332,7 +332,9 @@ class App extends React.Component {
                           unit={this.state.unit}
                           limit={this.state.limit}
                           occurrences={this.state.occurrences}
-                          updateLogEntry={this.updateLogEntry} />
+                          updateLogEntry={this.updateLogEntry}
+                          totalPoints={this.state.totalPoints}
+                          ranking={this.state.ranking} />
               </MuiThemeProvider>
             </div>
             <div className="row rowC">
