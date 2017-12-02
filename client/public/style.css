@@ -49,6 +49,9 @@ body {
   width: 100%;
 }
 
+#rowWithBackground {
+  background-image: url('/assets/yoga.jpeg');
+}
 .login {
   margin-top: 50px;
   padding: 10px;
@@ -57,8 +60,8 @@ body {
 
 .loginSignup {
   margin-bottom: 40px;
-  padding: 30px;
-  text-align: center;
+  margin-top: 40px;
+  margin-left: 10%;
 }
 
 .loginSignup h1 {

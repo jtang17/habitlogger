@@ -14,7 +14,7 @@ class TopBar extends React.Component {
     return (
       <div>
         <AppBar className="appBar"
-          title="Habit Logger"
+          title="reHabit"
           iconElementRight={this.props.loggedIn ? <DefaultMenu logout={this.props.logout} /> : null}
           //LoginMenu was here in place of null - not used for now
           showMenuIconButton={false}
