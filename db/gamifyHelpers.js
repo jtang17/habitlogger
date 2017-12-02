@@ -54,29 +54,33 @@ const updatePoints = (timeframe, limit, occurrence, totalPoints) => {
     }
   } else if (timeframe === 'Month') {
 
-    let day = JSON.stringify(occurrence[0].timestamp).slice(8, 2);
-    let month = JSON.stringify(occurrence[0].timestamp).slice(5, 2);
+    let day = Number(JSON.stringify(occurrence[0].timestamp).slice(8, 10));
+    let month = Number(JSON.stringify(occurrence[0].timestamp).slice(5, 7));
     goalTotal = 0
     let goalMet = false;
 
     for (let i = 0; i < occurrence.length; i++) {
-      let currentMonth = JSON.stringify(occurrence[i].timestamp).slice(5, 2);
-      let currentDay = JSON.stringify(occurrence[i].timestamp).slice(8, 2);
+      let currentMonth = Number(JSON.stringify(occurrence[i].timestamp).slice(5, 7));
+      let currentDay = Number(JSON.stringify(occurrence[i].timestamp).slice(8, 10));
 
-      if (currentMonth === month ||
-          (Number(currentMonth) === Number(month) + 1 ||
-           currentMonth === '01' && month === '12') &&
-          Number(currentDay) < Number(day)) {
+      // ( currentMonth = month ) OR ( ( currentMonth = month+1  OR (currentMonth = 1 AND month = 12 ) ) AND currentDay < day)
+      console.log('day, month, currentDay, currentMonth', `${day} , ${month}, ${currentDay}, ${currentMonth}`)
+      console.log('day ', occurrence[0].timestamp.slice(8,10))
+      console.log('day ', occurrence[0].timestamp.slice(8,10))
+      console.log('month ', occurrence[0].timestamp.slice(5,7))
+
+      if (currentMonth === month || ((currentMonth === month + 1 ||(currentMonth === 1 && month === 12)) && currentDay < day)) {
         goalTotal += occurrence[i].value;
         if (goalTotal >= limit && !goalMet) {
           totalPoints += 800;
+          console.log('Bonus being added', totalPoints)
           goalMet = true;
         }
       } else {
-        if (month === '12') {
-          month = '01';
+        if (month === 12) {
+          month = 1;
         } else {
-          month = (Number(month) + 1).toString();
+          month++
         }
         goalTotal = 0;
         goalMet = false
