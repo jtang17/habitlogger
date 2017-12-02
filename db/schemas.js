@@ -21,6 +21,8 @@ const habitSchema = new Schema({
   limit: Number, // e.g., 5 (per timeframe)
   unit: String, // e.g., cigars
   timeframe: String, // e.g., day / week / month
+  totalPoints: Number,
+  ranking: String,
   occurrences: [occurrenceSchema], // Embeded subdocument.
 });
 
