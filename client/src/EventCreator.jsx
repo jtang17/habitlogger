@@ -39,7 +39,7 @@ class EventCreator extends React.Component{
   render() {
     const style = {
       eventCreator: {
-        height: 600,
+        height: 640,
         width: 400,
         padding: '20px',
         margin: '0 auto',
@@ -89,7 +89,7 @@ class EventCreator extends React.Component{
           <RaisedButton label="Create Habit" primary={true} onClick={this.props.createHabit.bind(this, this.state.event, this.state.units, this.state.limit, this.state.currentTimeframe) }
             style={style.logButton} />
 
-          <RaisedButton label="Log Data" primary={true} onClick={this.props.changeCreateHabitView} style={style.createHButton} />
+          <RaisedButton label="Log Data" primary={false} onClick={this.props.changeCreateHabitView} style={style.createHButton} />
           <hr />
         </Paper>
       </div>
