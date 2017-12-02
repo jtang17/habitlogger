@@ -158,6 +158,9 @@ class App extends React.Component {
   logHabit(event, time, quantity) {
     let fieldsFilled = this.checkFields(event, quantity);
     if(fieldsFilled) {
+      if (this.state.errorText !== '') {
+        this.setState({ errorText: '' });
+      }
       let occurrence = {
         username: this.state.username,
         habit: event,
@@ -228,6 +231,7 @@ class App extends React.Component {
     };
     axios.post(`/api/${this.state.username}/habit`, habit)
     .then((res) => {
+      this.changeCreateHabitView();
       this.getUserData();
     })
     .catch((err) => {
