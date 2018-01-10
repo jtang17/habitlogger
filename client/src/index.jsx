@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {deepPurple500} from 'material-ui/styles/colors';
+import {indigoA400} from 'material-ui/styles/colors';
 import TopBar from './TopBar.jsx';
 import MuiTable from './Table.jsx';
 import Chart from './Chart.jsx';
@@ -15,8 +15,8 @@ import EventSelector from './EventSelector.jsx';
 
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: deepPurple500,
-    primary2Color: deepPurple500
+    primary1Color: indigoA400,
+    primary2Color: indigoA400
   }
 });
 
