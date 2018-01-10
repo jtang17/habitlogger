@@ -11,7 +11,6 @@ import Auth from './Auth/Auth.jsx';
 import axios from 'axios';
 import Login from './Login.jsx';
 import EventCreator from './EventCreator.jsx';
-import EventSelector from './EventSelector.jsx';
 
 const muiTheme = getMuiTheme({
   palette: {
