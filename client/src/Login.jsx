@@ -172,19 +172,22 @@ class Login extends React.Component {
               <p>Level up rankings to become a Master</p>
             </div>
           </div>
-          <div className="row footerRow">
-            <div className="col-md-4 footer">
-              <h3 className="footerNames"><a href="https://github.com/jtang17/habitshaper" target="_new">Habit Logger</a></h3>
-            </div>
-            <div className="col-md-4 footer">
-            </div>
-            <div className="col-md-4 footer">
-            </div>
-          </div>
+
         </div>
       </MuiThemeProvider>
     )
   }
 }
 
+          // (
+          // <div className="row footerRow">
+          //   <div className="col-md-4 footer">
+          //     <h3 className="footerNames"><a href="https://github.com/jtang17/habitlogger" target="_new">Git Link</a></h3>
+          //   </div>
+          //   <div className="col-md-4 footer">
+          //   </div>
+          //   <div className="col-md-4 footer">
+          //   </div>
+          // </div>
+          // )
 export default Login;
