@@ -1,7 +1,7 @@
 {
-  "name": "stoneandsand",
-  "version": "1.0.0",
-  "description": "Daily event/habit tracker & visualizer.",
+  "name": "Habit Logger",
+  "version": "1.1.0",
+  "description": "Daily habit tracker & visualizer.",
   "engine": "node 6.11.5",
   "main": "index.js",
   "scripts": {
@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/stoneandsand/stoneandsand.git"
+    "url": "https://github.com/jtang17/habitlogger.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/stoneandsand/stoneandsand/issues"
+    "url": "https://github.com/jtang17/habitlogger/issues"
   },
-  "homepage": "https://github.com/stoneandsand/stoneandsand#readme",
+  "homepage": "https://github.com/jtang17/habitlogger#readme",
   "dependencies": {
     "axios": "^0.17.1",
     "babel": "^6.23.0",
