@@ -1,5 +1,5 @@
 {
-  "name": "Habit Logger",
+  "name": "habitlogger",
   "version": "1.1.0",
   "description": "Daily habit tracker & visualizer.",
   "engine": "node 6.11.5",
