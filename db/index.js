@@ -1,11 +1,14 @@
 const bcrypt = require('bcrypt');
+
 const saltRounds = 10;
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
 const User = require('./schemas.js');
 const game = require('./gamifyHelpers.js');
+
 const DB_URI = process.env.MONGODB_URI ? `${process.env.MONGODB_URI}/stoneandsand` : 'mongodb://localhost/stoneandsand';
 mongoose.Promise = require('bluebird');
+
 mongoose.connect(DB_URI);
 
 // Monitor the db connection.
@@ -16,19 +19,18 @@ database.once('open', () => {
 });
 
 // HELPERS
-const sortByDate = (a, b) => {
+const sortByDate = (a, b) =>
   // Refer to docs for Array.prototype.sort.
-  return a.timestamp - b.timestamp;
-};
+  a.timestamp - b.timestamp;
 
 // METHODS
 const signup = (user, cb) => {
-  User.findOne({username: user.username}, (err, userEntry) => {
-    if (err) {
-      console.error(err);
+  User.findOne({ username: user.username }, (error, userEntry) => {
+    if (error) {
+      console.error(error);
     } else if (!userEntry) { // The user does not exist in the database.
       bcrypt.hash(user.password, saltRounds, (err, hash) => {
-        let newUser = new User({
+        const newUser = new User({
           username: user.username,
           password: hash,
         });
@@ -52,22 +54,20 @@ const verifyLogin = (user, cb) => {
   if (user.username && user.password) {
     // ^TODO: Move JSON property checking to router-side.
     User.findOne({
-      username: user.username
-    }, (err, userEntry) => {
-      if (err) {
-        console.error(err);
-      } else {
-        if (userEntry && userEntry.password) {
-          bcrypt.compare(user.password, userEntry.password, function(err, hashMatches) {
-            if (hashMatches) {
-              cb(true);
-            } else { // Hashes don't match.
-              cb(false);
-            }
-          });
-        } else { // No userEntry or password exists.
-          cb(false);
-        }
+      username: user.username,
+    }, (error, userEntry) => {
+      if (error) {
+        console.error(error);
+      } else if (userEntry && userEntry.password) {
+        bcrypt.compare(user.password, userEntry.password, (err, hashMatches) => {
+          if (hashMatches) {
+            cb(true);
+          } else { // Hashes don't match.
+            cb(false);
+          }
+        });
+      } else { // No userEntry or password exists.
+        cb(false);
       }
     });
   } else { // Client did not submit a username or password.
@@ -76,7 +76,7 @@ const verifyLogin = (user, cb) => {
 };
 
 const getUserHabits = (user, cb) => {
-  User.findOne({username: user}, (err, userEntry) => {
+  User.findOne({ username: user }, (err, userEntry) => {
     if (err) {
       console.error(`Error getting ${user}'s habits.`);
     } else if (!userEntry) {
@@ -88,12 +88,12 @@ const getUserHabits = (user, cb) => {
 };
 
 const getHabitData = (user, habit, cb) => {
-  User.findOne({username: user}, (err, userEntry) => {
+  User.findOne({ username: user }, (err, userEntry) => {
     if (err) {
       console.error(`Error getting ${user}'s habits.`);
     }
     // Iterate over the user's habits and return the target habit.
-    let targetHabit = userEntry.habits.filter(habitEntry => habitEntry.habit === habit).pop();
+    const targetHabit = userEntry.habits.filter(habitEntry => habitEntry.habit === habit).pop();
     targetHabit.occurrences.sort(sortByDate); // The client expects sorted occurrences.
 
     if (targetHabit) {
@@ -105,10 +105,10 @@ const getHabitData = (user, habit, cb) => {
 };
 
 const createHabit = (habitData, cb) => {
-  User.findOne({username: habitData.username}, (err, userEntry) => {
+  User.findOne({ username: habitData.username }, (err, userEntry) => {
     if (err) {
       console.error(`Error getting ${habitData.username}.`);
-    }  else {
+    } else {
       userEntry.habitList.push(habitData.habit);
       userEntry.habits.push({
         habit: habitData.habit,
@@ -116,7 +116,7 @@ const createHabit = (habitData, cb) => {
         unit: habitData.unit,
         timeframe: habitData.timeframe,
         ranking: 'apprentice',
-        totalPoints: 0
+        totalPoints: 0,
       });
       userEntry.save((err, updatedUserEntry) => {
         if (err) {
@@ -131,20 +131,21 @@ const createHabit = (habitData, cb) => {
 };
 
 const logOccurrence = (logData, cb) => {
-  User.findOne({username: logData.username}, (err, userEntry) => {
-    if (err) {
-      console.error(`Error getting ${user}.`);
-    }  else {
+  User.findOne({ username: logData.username }, (error, userEntry) => {
+    if (error) {
+      console.error(`Error getting ${logData.username}.`);
+    } else {
       // habits is an array of habits, not an object reference.
       // We have to iterate over each habit in this array to find the target habit.
       // Once found, we log the occurrence to that habit.
-      userEntry.habits.forEach(habitEntry => {
+      userEntry.habits.forEach((habitEntry) => {
         if (logData.habit === habitEntry.habit) {
-          habitEntry.occurrences.push(logData.occurrence);
+          let { timeframe, totalPoints, limit, occurrences } = habitEntry;
+          occurrences.push(logData.occurrence);
           // update the points of the user
-          habitEntry.totalPoints = game.updatePoints(habitEntry.timeframe, habitEntry.limit, habitEntry.occurrences, 0);
+          habitEntry.totalPoints = game.updatePoints(timeframe, limit, occurrences, 0);
           // update the ranking of the user
-          habitEntry.ranking = game.updateRanking(habitEntry.totalPoints, habitEntry.ranking)
+          habitEntry.ranking = game.updateRanking(totalPoints, habitEntry.ranking);
           userEntry.save((err, updatedUserEntry) => {
             if (err) {
               console.error(`Error getting ${user}.`);
@@ -162,49 +163,48 @@ const logOccurrence = (logData, cb) => {
 };
 
 const findUser = (log, cb) => {
-  User.findOne({username: log.username}, (err, userEntry) => {
+  User.findOne({ username: log.username }, (err, userEntry) => {
     if (err) {
       console.log('error finding user: ', err);
-      cb(err, null)
+      cb(err, null);
     } else {
       // console.log('user is found!!!!!!', userEntry)
       cb(err, userEntry);
     }
-  })
-}
+  });
+};
 
 const findHabit = (userEntry, view, cb) => {
-  let habitsOfUser = userEntry.habits
+  const habitsOfUser = userEntry.habits;
   let habitToUpdate;
   habitsOfUser.forEach((habit) => {
-    if(habit.habit === view) {
-      habitToUpdate = habit
+    if (habit.habit === view) {
+      habitToUpdate = habit;
     }
-  })
-  if(habitToUpdate) {
+  });
+  if (habitToUpdate) {
     cb(habitToUpdate);
   } else {
     console.log('habit not found');
   }
-}
+};
 
 const isSameTime = (dbTime, clientTime) => {
   // string time stamps
-  let stringDbTime = JSON.stringify(dbTime);
-  let stringClientTime = JSON.stringify(clientTime);
+  const stringDbTime = JSON.stringify(dbTime);
+  const stringClientTime = JSON.stringify(clientTime);
   // find the index of where T begins
-  let findDbT = stringDbTime.indexOf('T');
-  let findClientT = stringClientTime.indexOf('T');
+  const findDbT = stringDbTime.indexOf('T');
+  const findClientT = stringClientTime.indexOf('T');
   // make timestamps comparable
-  let dbTimestamp = stringDbTime.slice(1, findDbT);
-  let clientTimestamp = stringClientTime.slice(1, findClientT);
+  const dbTimestamp = stringDbTime.slice(1, findDbT);
+  const clientTimestamp = stringClientTime.slice(1, findClientT);
   // check if the equal
   if (clientTimestamp === dbTimestamp) {
     return true;
-  } else {
-    return false;
   }
-}
+  return false;
+};
 
 const updateLog = (log, cb) => {
   // search for the user
@@ -232,8 +232,7 @@ const updateLog = (log, cb) => {
       });
     });
   });
-
-}
+};
 
 const deleteLog = (log, cb) => {
   // find the user
@@ -262,7 +261,7 @@ const deleteLog = (log, cb) => {
       });
     });
   });
-}
+};
 
 const deleteHabit = (log, cb) => {
   // find the user
@@ -270,9 +269,8 @@ const deleteHabit = (log, cb) => {
     findHabit(userEntry, log.viewHabit, (habitToUpdate) => {
       // if habit is found delete it
       userEntry.habits.forEach((habit, i) => {
-
         if (habit.habit === habitToUpdate.habit) {
-          console.log('if this equals im in!')
+          console.log('if this equals im in!');
           userEntry.habits.splice(i, 1);
           for (var i = 0; i < userEntry.habitList.length; i++) {
             if (userEntry.habitList[i] === habit.habit) {
@@ -280,17 +278,17 @@ const deleteHabit = (log, cb) => {
             }
           }
         }
-      })
+      });
       userEntry.save((err) => {
-        if(err) {
-          cb(err, null)
+        if (err) {
+          cb(err, null);
         } else {
           cb(err, true);
         }
       });
     });
   });
-}
+};
 
 // EXPORTS
 module.exports.signup = signup;

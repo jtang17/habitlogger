@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 // SCHEMAS
 // A user has many habits, and a habit has many occurrences.
@@ -17,7 +18,7 @@ const occurrenceSchema = new Schema({
 });
 
 const habitSchema = new Schema({
-  habit: {type: String}, // e.g., smoking.
+  habit: { type: String }, // e.g., smoking.
   limit: Number, // e.g., 5 (per timeframe)
   unit: String, // e.g., cigars
   timeframe: String, // e.g., day / week / month
@@ -28,10 +29,10 @@ const habitSchema = new Schema({
 
 // Schema for users.
 const userSchema = new Schema({
-  username: {type: String, unique: true},
+  username: { type: String, unique: true },
   password: String,
   habitList: Array, // Used to populate dropdowns, e.g., ['smoking', 'running']
-  habits: [habitSchema],  // Embeded subdocument.
+  habits: [habitSchema], // Embeded subdocument.
 });
 
 module.exports = mongoose.model('User', userSchema);

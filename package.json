@@ -10,7 +10,7 @@
     "server-dev": "nodemon server/index.js",
     "seed": "node db/seed.js",
     "start": "webpack -d | node server/index.js",
-    "test": "./node_modules/.bin/eslint --color --ext .js --ext .jsx ."
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -55,6 +55,7 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-react": "^7.4.0",
     "eslint-plugin-standard": "^3.0.1",
+    "jest": "^22.0.5",
     "json-loader": "^0.5.7",
     "transform-loader": "^0.2.4"
   }

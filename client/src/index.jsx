@@ -7,7 +7,6 @@ import TopBar from './TopBar.jsx';
 import MuiTable from './Table.jsx';
 import Chart from './Chart.jsx';
 import DataLogger from './DataLogger.jsx';
-import Auth from './Auth/Auth.jsx';
 import axios from 'axios';
 import Login from './Login.jsx';
 import EventCreator from './EventCreator.jsx';
