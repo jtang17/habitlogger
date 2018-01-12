@@ -1,6 +1,6 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-import Social from './socialSharing.jsx';
+import Social from './SocialSharing.jsx';
 import moment from 'moment';
 import Paper from 'material-ui/Paper';
 import AppBar from 'material-ui/AppBar';

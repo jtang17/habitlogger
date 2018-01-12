@@ -8,8 +8,8 @@ This project uses the Airbnb style guide. Refer to: https://github.com/airbnb/ja
 |----------+---------------------------|
 | TERM     | REPO                      |
 |----------+---------------------------|
-| Upstream | stoneandsand/stoneandsand |
-| Origin   | your github/stoneandsand  |
+| Upstream | stoneandsand/habitlogger  |
+| Origin   | your github/habitlogger   |
 | Local    | Local files in git.       |
 |----------+---------------------------|
 
@@ -20,7 +20,7 @@ git checkout master
 git pull --rebase upstream master
 #+END_SRC
 
-** 2. Create a new feature-branch, or check out an existing one. 
+** 2. Create a new feature-branch, or check out an existing one.
 #+BEGIN_SRC bash
 git checkout -b feature-branch-name
 #+END_SRC
@@ -32,7 +32,7 @@ git add
 git commit
 #+END_SRC
 
-** 4. Make sure you are still up-to-date with master before pushing. 
+** 4. Make sure you are still up-to-date with master before pushing.
 #+BEGIN_SRC bash
 git pull --rebase upstream master
 #+END_SRC
