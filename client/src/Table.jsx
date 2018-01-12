@@ -16,8 +16,8 @@ const style = {
   paper: {
     height: '640px',
     padding: '20px',
-  }
-}
+  },
+};
 
 class MuiTable extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class MuiTable extends React.Component {
       showUpdateDelete: false,
       selected: '',
       errorText: '',
-    }
+    };
     this.handleRowSelection = this.handleRowSelection.bind(this);
     this.handleModifyClick = this.handleModifyClick.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
@@ -37,11 +37,11 @@ class MuiTable extends React.Component {
   }
 
   handleRowSelection(sel) {
-    let timeStamp = this.props.occurrences[sel].timestamp;
+    const timeStamp = this.props.occurrences[sel].timestamp;
     this.setState({
       selected: sel,
-      time: timeStamp
-    }, function() {
+      time: timeStamp,
+    }, function () {
       console.log(this.state.time);
     });
   }
@@ -57,18 +57,18 @@ class MuiTable extends React.Component {
         errorText: '',
       });
     } else {
-      this.setState({ errorText: '** Please select a log to modify'});
+      this.setState({ errorText: '** Please select a log to modify' });
     }
   }
 
   updateQuantity(e) {
-    let val = e.target.value;
+    const val = e.target.value;
     this.setState({ quantity: val });
   }
 
   handleUpdateClick() {
-    let time = this.state.time;
-    let quantity = this.state.quantity;
+    const time = this.state.time;
+    const quantity = this.state.quantity;
 
     this.props.updateLogEntry(time, quantity);
   }
@@ -86,43 +86,45 @@ class MuiTable extends React.Component {
     return (
       <div className="table">
         <Paper style={style.paper} zDepth={1}>
-        <h1 className="tableName">You are {article} {this.props.ranking} at {this.props.habit}</h1>
-        <h3 className="pointDisplay">You have earned {this.props.totalPoints} points!</h3>
-        <h3 className="limitInfo">You set your goal to {this.props.limit} {this.props.unit} per {this.props.timeframe}</h3>
-        <Table height={this.state.height} width={this.state.width} onRowSelection={this.handleRowSelection}>
-          <TableHeader displaySelectAll={false}>
-            <TableRow>
-              <TableHeaderColumn>Date</TableHeaderColumn>
-              <TableHeaderColumn>{this.props.unit}</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {
+          <h1 className="tableName">You are {article} {this.props.ranking} at {this.props.habit}</h1>
+          <h3 className="pointDisplay">You have earned {this.props.totalPoints} points!</h3>
+          <h3 className="limitInfo">You set your goal to {this.props.limit} {this.props.unit} per {this.props.timeframe}</h3>
+          <Table height={this.state.height} width={this.state.width} onRowSelection={this.handleRowSelection}>
+            <TableHeader displaySelectAll={false}>
+              <TableRow>
+                <TableHeaderColumn>Date</TableHeaderColumn>
+                <TableHeaderColumn>{this.props.unit}</TableHeaderColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {
               this.props.occurrences.map((occurence, index) => {
-                let momentDate = moment(occurence.timestamp).format('MMM Do YYYY');
+                const momentDate = moment(occurence.timestamp).format('MMM Do YYYY');
                 return (
                   <TableRow key={occurence._id} selected={this.isSelected(index)}>
                     <TableRowColumn>{momentDate}</TableRowColumn>
                     <TableRowColumn>{occurence.value}</TableRowColumn>
                   </TableRow>
-                )
+                );
               })
             }
-          </TableBody>
-        </Table>
+            </TableBody>
+          </Table>
 
-        <RaisedButton label="Modify" primary={true} onClick={this.handleModifyClick} />
-        <p>{this.state.errorText}</p>
-        {this.state.showUpdateDelete ?
-          <UpdateDelete quantity={this.state.quantity}
-                        updateQuantity={this.updateQuantity}
-                        handleUpdateClick={this.handleUpdateClick} />
+          <RaisedButton label="Modify" primary onClick={this.handleModifyClick} />
+          <p>{this.state.errorText}</p>
+          {this.state.showUpdateDelete ?
+            <UpdateDelete
+              quantity={this.state.quantity}
+              updateQuantity={this.updateQuantity}
+              handleUpdateClick={this.handleUpdateClick}
+            />
           : null
         }
         </Paper>
       </div>
-    )
+    );
   }
-};
+}
 
 export default MuiTable;

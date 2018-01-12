@@ -3,7 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
-import AppBar from 'material-ui/AppBar'
+import AppBar from 'material-ui/AppBar';
 
 
 class Login extends React.Component {
@@ -15,8 +15,8 @@ class Login extends React.Component {
       signupUsername: '',
       signupPassword: '',
       signupPassword2: '',
-      loginView: true
-    }
+      loginView: true,
+    };
     this.elementChange = this.elementChange.bind(this);
     this.changeLoginView = this.changeLoginView.bind(this);
     this.resetLoginFields = this.resetLoginFields.bind(this);
@@ -25,12 +25,12 @@ class Login extends React.Component {
 
   elementChange(e) {
     this.setState({
-      [e.target.name]: e.target.value
-    })
+      [e.target.name]: e.target.value,
+    });
   }
   changeLoginView() {
     this.setState({
-      loginView: !this.state.loginView
+      loginView: !this.state.loginView,
     });
   }
 
@@ -49,7 +49,7 @@ class Login extends React.Component {
       loginPassword: '',
       signupUsername: '',
       signupPassword: '',
-      signupPassword2: ''
+      signupPassword2: '',
     });
   }
 
@@ -60,83 +60,87 @@ class Login extends React.Component {
         width: 300,
         margin: '0 auto',
         textAlign: 'center',
-        display: 'inline-block'
+        display: 'inline-block',
       },
       login: {
         height: 270,
         width: 300,
         textAlign: 'center',
-        display: 'inline-block'
+        display: 'inline-block',
       },
       button: {
         margin: 10,
       },
       appBar: {
-        textAlign: 'center'
-      }
+        textAlign: 'center',
+      },
     };
 
-    let loginOrSignupView
+    let loginOrSignupView;
     if (this.state.loginView) {
-      loginOrSignupView = <div >
-              <Paper style={style.login} zDepth={1}>
-                <AppBar title="Login" style={style.appBar} showMenuIconButton={false}/>
-                  <TextField
-                    hintText="Enter Username"
-                    floatingLabelText="Username"
-                    name="loginUsername"
-                    value={this.state.loginUsername}
-                    onChange={this.elementChange}
-                   />
-                   <br />
-                  <TextField
-                    type="password"
-                    hintText="Enter Password"
-                    floatingLabelText="Password"
-                    name="loginPassword"
-                    value={this.state.loginPassword}
-                    onChange={this.elementChange}
-                   />
-                   <br />
-                  <RaisedButton label="LOGIN" primary={true} onClick={this.props.login.bind(this, this.state.loginUsername, this.state.loginPassword)} style={style.button}/>
-                  <RaisedButton label="Signup as new user" primary={true} onClick={this.changeLoginView} />
-              </Paper>
-            </div>
+      loginOrSignupView = (<div >
+        <Paper style={style.login} zDepth={1}>
+          <AppBar title="Login" style={style.appBar} showMenuIconButton={false} />
+          <TextField
+            hintText="Enter Username"
+            floatingLabelText="Username"
+            name="loginUsername"
+            value={this.state.loginUsername}
+            onChange={this.elementChange}
+          />
+          <br />
+          <TextField
+            type="password"
+            hintText="Enter Password"
+            floatingLabelText="Password"
+            name="loginPassword"
+            value={this.state.loginPassword}
+            onChange={this.elementChange}
+          />
+          <br />
+          <RaisedButton label="LOGIN" primary onClick={this.props.login.bind(this, this.state.loginUsername, this.state.loginPassword)} style={style.button} />
+          <RaisedButton label="Signup as new user" primary onClick={this.changeLoginView} />
+        </Paper>
+                           </div>);
     } else {
-      loginOrSignupView = <div >
-              <Paper style={style.sign} zDepth={1}>
-                <AppBar title="Sign Up" showMenuIconButton={false}/>
-                  <TextField
-                    hintText="Enter Username"
-                    floatingLabelText="Username"
-                    name="signupUsername"
-                    value={this.state.signupUsername}
-                    onChange={this.elementChange}
-                  />
-                  <br />
-                  <TextField
-                    type="password"
-                    hintText="Enter Password"
-                    floatingLabelText="Password"
-                    name="signupPassword"
-                    value={this.state.signupPassword}
-                    onChange={this.elementChange}
-                  />
-                  <br />
-                  <TextField
-                    type="password"
-                    hintText="Verify Password"
-                    floatingLabelText="Re-enter Password"
-                    name="signupPassword2"
-                    value={this.state.signupPassword2}
-                    onChange={this.elementChange}
-                  />
-                  <br />
-                  <RaisedButton label="SIGNUP" primary={true} onClick={this.handleSignupClick}
-                                style={style.button}/>
-                  <RaisedButton label="Go back to login" primary={true} onClick={this.changeLoginView} />
-              </Paper>
-            </div>
+      loginOrSignupView = (<div >
+        <Paper style={style.sign} zDepth={1}>
+          <AppBar title="Sign Up" showMenuIconButton={false} />
+          <TextField
+            hintText="Enter Username"
+            floatingLabelText="Username"
+            name="signupUsername"
+            value={this.state.signupUsername}
+            onChange={this.elementChange}
+          />
+          <br />
+          <TextField
+            type="password"
+            hintText="Enter Password"
+            floatingLabelText="Password"
+            name="signupPassword"
+            value={this.state.signupPassword}
+            onChange={this.elementChange}
+          />
+          <br />
+          <TextField
+            type="password"
+            hintText="Verify Password"
+            floatingLabelText="Re-enter Password"
+            name="signupPassword2"
+            value={this.state.signupPassword2}
+            onChange={this.elementChange}
+          />
+          <br />
+          <RaisedButton
+            label="SIGNUP"
+            primary
+            onClick={this.handleSignupClick}
+            style={style.button}
+          />
+          <RaisedButton label="Go back to login" primary onClick={this.changeLoginView} />
+        </Paper>
+                           </div>);
     }
     return (
       <MuiThemeProvider muiTheme={this.props.muiTheme}>
@@ -175,19 +179,19 @@ class Login extends React.Component {
 
         </div>
       </MuiThemeProvider>
-    )
+    );
   }
 }
 
-          // (
-          // <div className="row footerRow">
-          //   <div className="col-md-4 footer">
-          //     <h3 className="footerNames"><a href="https://github.com/jtang17/habitlogger" target="_new">Git Link</a></h3>
-          //   </div>
-          //   <div className="col-md-4 footer">
-          //   </div>
-          //   <div className="col-md-4 footer">
-          //   </div>
-          // </div>
-          // )
+// (
+// <div className="row footerRow">
+//   <div className="col-md-4 footer">
+//     <h3 className="footerNames"><a href="https://github.com/jtang17/habitlogger" target="_new">Git Link</a></h3>
+//   </div>
+//   <div className="col-md-4 footer">
+//   </div>
+//   <div className="col-md-4 footer">
+//   </div>
+// </div>
+// )
 export default Login;

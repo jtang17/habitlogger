@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {indigoA400} from 'material-ui/styles/colors';
+import { indigoA400 } from 'material-ui/styles/colors';
 import TopBar from './TopBar.jsx';
 import MuiTable from './Table.jsx';
 import Chart from './Chart.jsx';
@@ -14,8 +14,8 @@ import EventCreator from './EventCreator.jsx';
 const muiTheme = getMuiTheme({
   palette: {
     primary1Color: indigoA400,
-    primary2Color: indigoA400
-  }
+    primary2Color: indigoA400,
+  },
 });
 
 class App extends React.Component {
@@ -31,8 +31,8 @@ class App extends React.Component {
       createHabitView: false,
       occurrences: [],
       totalPoints: 0,
-      ranking: ''
-    }
+      ranking: '',
+    };
     this.login = this.login.bind(this);
     this.signup = this.signup.bind(this);
     this.logout = this.logout.bind(this);
@@ -44,19 +44,18 @@ class App extends React.Component {
     this.selectHabit = this.selectHabit.bind(this);
     this.checkFields = this.checkFields.bind(this);
     this.changeCreateHabitView = this.changeCreateHabitView.bind(this);
-    this.deleteHabit = this.deleteHabit.bind(this)
+    this.deleteHabit = this.deleteHabit.bind(this);
   }
 
   login(username, password) {
-    axios.post('/login', {username: username, password: password})
+    axios.post('/login', { username, password })
       .then((res) => {
         console.log('cliend index.js login');
         console.log(res.data);
         if (res.data) {
-          this.setState({
-            username: res.data}, function() {
-              this.getUserData();
-            });
+          this.setState({ username: res.data }, function () {
+            this.getUserData();
+          });
         } else {
           alert('Incorrect Credentials');
         }
@@ -70,12 +69,12 @@ class App extends React.Component {
     if (username.length < 4 || password.length < 4) {
       alert('Username and password must be at least 4 characters.');
     } else {
-      axios.post('/signup', {username: username, password: password})
+      axios.post('/signup', { username, password })
         .then((res) => {
           if (res.data) {
             this.setState({
               username: res.data,
-              createHabitView: true
+              createHabitView: true,
             });
           } else {
             alert('Failed to sign up. Username possibly taken.');
@@ -84,7 +83,7 @@ class App extends React.Component {
         .catch((err) => {
           console.error(err);
         });
-      }
+    }
   }
 
   logout() {
@@ -106,12 +105,12 @@ class App extends React.Component {
 
   // retrieve user's habits and set as state for other components
   getUserData(cb) {
-    let username = this.state.username;
+    const username = this.state.username;
     axios.get(`/users/${username}`)
       .then((res) => {
         this.setState({
           habits: res.data,
-        })
+        });
       })
       .then(() => {
         if ((this.state.viewHabit === '' || this.state.habits.indexOf(this.state.viewHabit)) && this.state.habits[0]) {
@@ -124,12 +123,10 @@ class App extends React.Component {
             occurrences: [],
             viewData: true,
             viewHabit: '',
-            createHabitView: true
+            createHabitView: true,
           });
-        } else {
-          if (cb) {
-            cb();
-          }
+        } else if (cb) {
+          cb();
         }
       })
       .catch((err) => {
@@ -139,7 +136,7 @@ class App extends React.Component {
 
   // retrieve occurrences information for specific habit of user
   getHabitsInfo(habit, cb) {
-    let username = this.state.username;
+    const username = this.state.username;
     axios.get(`/api/${username}/${habit}`)
       .then((res) => {
         this.setState({
@@ -163,12 +160,12 @@ class App extends React.Component {
 
   // used in dataLogger to record occurrence in database (POST)
   logHabit(event, time, quantity) {
-    let fieldsFilled = this.checkFields(event, quantity);
-    if(fieldsFilled) {
+    const fieldsFilled = this.checkFields(event, quantity);
+    if (fieldsFilled) {
       if (this.state.errorText !== '') {
         this.setState({ errorText: '' });
       }
-      let occurrence = {
+      const occurrence = {
         username: this.state.username,
         habit: event,
         occurrence: {
@@ -177,13 +174,13 @@ class App extends React.Component {
         },
       };
       axios.post(`/api/${this.state.username}/log`, occurrence)
-      .then((res) => {
-        this.selectHabit(event);
+        .then((res) => {
+          this.selectHabit(event);
         // can re-factor to use occurrence object returned by the request
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     } else {
       this.setState({ errorText: 'Required' });
     }
@@ -192,33 +189,33 @@ class App extends React.Component {
   updateLogEntry(time, quantity) {
     console.log(quantity);
     if (quantity === '0' || quantity === '') {
-      let data = {
+      const data = {
         username: this.state.username,
         timeframe: time,
         viewHabit: this.state.viewHabit,
       };
       console.log(data);
-      axios({method: 'delete', url: '/deleteLog', data: data})
-      .then((res) => {
-        this.getHabitsInfo(this.state.viewHabit);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      axios({ method: 'delete', url: '/deleteLog', data })
+        .then((res) => {
+          this.getHabitsInfo(this.state.viewHabit);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
-      let data = {
+      const data = {
         username: this.state.username,
         value: quantity,
         timeframe: time,
         viewHabit: this.state.viewHabit,
       };
       axios.put('/updatelog', data)
-      .then((res) => {
-        this.getHabitsInfo(this.state.viewHabit);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+        .then((res) => {
+          this.getHabitsInfo(this.state.viewHabit);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
@@ -227,23 +224,23 @@ class App extends React.Component {
     return event && quantity.length > 0;
   }
 
-  //used by EventCreator to add habits to user's list of habits in database
+  // used by EventCreator to add habits to user's list of habits in database
   createHabit(name, unit, limit, timeframe) {
-    let habit = {
+    const habit = {
       username: this.state.username,
       habit: name,
-      limit: limit,
-      unit: unit,
-      timeframe: timeframe,
+      limit,
+      unit,
+      timeframe,
     };
     axios.post(`/api/${this.state.username}/habit`, habit)
-    .then((res) => {
-      this.changeCreateHabitView();
-      this.getUserData();
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+      .then((res) => {
+        this.changeCreateHabitView();
+        this.getUserData();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   // select habit to be displayed in chart and table
@@ -256,25 +253,25 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    let that = this;
+    const that = this;
     axios.get('/checkSession')
-    .then((res) => {
-      if (res.data) {
-        this.setState({
-          username: res.data
-        }, function() {
-          this.getUserData();
-        });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((res) => {
+        if (res.data) {
+          this.setState({
+            username: res.data,
+          }, function () {
+            this.getUserData();
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   changeCreateHabitView() {
-    const newView = !this.state.createHabitView
+    const newView = !this.state.createHabitView;
     this.setState({
-      createHabitView: newView
+      createHabitView: newView,
     });
   }
 
@@ -282,14 +279,14 @@ class App extends React.Component {
     if (this.state.viewHabit) {
       axios.delete('/deleteHabit', {
         data: {
-          username:this.state.username,
-          viewHabit: this.state.viewHabit
-        }
+          username: this.state.username,
+          viewHabit: this.state.viewHabit,
+        },
       })
-      .then((res) => {
-        this.getUserData();
-      })
-      .catch((err) => console.log(err));
+        .then((res) => {
+          this.getUserData();
+        })
+        .catch(err => console.log(err));
     }
   }
 
@@ -297,16 +294,18 @@ class App extends React.Component {
   render() {
     let habitCreateOrDataLogger;
     if (this.state.createHabitView) {
-      habitCreateOrDataLogger = <EventCreator createHabit={this.createHabit} changeCreateHabitView={this.changeCreateHabitView} />
+      habitCreateOrDataLogger = <EventCreator createHabit={this.createHabit} changeCreateHabitView={this.changeCreateHabitView} />;
     } else {
-      habitCreateOrDataLogger = <DataLogger habits={this.state.habits}
-                            occurrences={this.state.occurrences}
-                            errorText={this.state.errorText}
-                            getHabitsInfo={this.getHabitsInfo.bind(this)}
-                            logHabit={this.logHabit}
-                            changeCreateHabitView={this.changeCreateHabitView}
-                            selectHabit={this.selectHabit}
-                            deleteHabit={this.deleteHabit} />
+      habitCreateOrDataLogger = (<DataLogger
+        habits={this.state.habits}
+        occurrences={this.state.occurrences}
+        errorText={this.state.errorText}
+        getHabitsInfo={this.getHabitsInfo.bind(this)}
+        logHabit={this.logHabit}
+        changeCreateHabitView={this.changeCreateHabitView}
+        selectHabit={this.selectHabit}
+        deleteHabit={this.deleteHabit}
+      />);
     }
     return (
       <div className="container-fluid">
@@ -314,7 +313,7 @@ class App extends React.Component {
           <TopBar logout={this.logout} loggedIn={this.state.username} />
         </MuiThemeProvider>
         {!this.state.username ?
-        <Login login={this.login} signup={this.signup} muiTheme={muiTheme} />
+          <Login login={this.login} signup={this.signup} muiTheme={muiTheme} />
         : null}
         {this.state.username ?
           <div className="main">
@@ -323,29 +322,33 @@ class App extends React.Component {
                 {habitCreateOrDataLogger}
               </MuiThemeProvider>
               <MuiThemeProvider muiTheme={muiTheme}>
-                <MuiTable habit={this.state.viewHabit}
-                          timeframe={this.state.timeframe}
-                          unit={this.state.unit}
-                          limit={this.state.limit}
-                          occurrences={this.state.occurrences}
-                          updateLogEntry={this.updateLogEntry}
-                          totalPoints={this.state.totalPoints}
-                          ranking={this.state.ranking} />
+                <MuiTable
+                  habit={this.state.viewHabit}
+                  timeframe={this.state.timeframe}
+                  unit={this.state.unit}
+                  limit={this.state.limit}
+                  occurrences={this.state.occurrences}
+                  updateLogEntry={this.updateLogEntry}
+                  totalPoints={this.state.totalPoints}
+                  ranking={this.state.ranking}
+                />
               </MuiThemeProvider>
             </div>
             <div className="row rowC">
               <MuiThemeProvider muiTheme={muiTheme}>
-                <Chart habit={this.state.viewHabit}
-                       timeframe={this.state.timeframe}
-                       unit={this.state.unit}
-                       limit={this.state.limit}
-                       occurrences={this.state.occurrences} />
+                <Chart
+                  habit={this.state.viewHabit}
+                  timeframe={this.state.timeframe}
+                  unit={this.state.unit}
+                  limit={this.state.limit}
+                  occurrences={this.state.occurrences}
+                />
               </MuiThemeProvider>
             </div>
           </div>
           : null}
       </div>
-    )
+    );
   }
 }
 

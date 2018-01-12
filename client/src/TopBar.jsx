@@ -13,13 +13,14 @@ class TopBar extends React.Component {
   render() {
     return (
       <div>
-        <AppBar className="appBar"
+        <AppBar
+          className="appBar"
           title="Habit Logger"
-          iconElementRight={this.props.loggedIn ? <DefaultMenu logout={this.props.logout} /> : null}
+          iconElementRight={this.props.loggedIn ? <FlatButton style={{ color: 'white' }} label="Signout" onClick={this.props.logout} /> : null}
           showMenuIconButton={false}
         />
       </div>
-    )
+    );
   }
 }
 
@@ -30,7 +31,7 @@ class DefaultMenu extends React.Component {
 
   render() {
     return (
-      <FlatButton style={{color: 'white'}} label="Signout" onClick={this.props.logout} />
+      <FlatButton style={{ color: 'white' }} label="Signout" onClick={this.props.logout} />
     );
   }
 }

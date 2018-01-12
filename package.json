@@ -5,7 +5,7 @@
   "engine": "node 6.11.5",
   "main": "index.js",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint --fix .",
+    "lint": "eslint --fix . --ext .jsx --ext .js",
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js",
     "seed": "node db/seed.js",

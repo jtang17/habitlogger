@@ -6,7 +6,7 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
-import AppBar from 'material-ui/AppBar'
+import AppBar from 'material-ui/AppBar';
 
 class DataLogger extends React.Component {
   constructor(props) {
@@ -41,7 +41,7 @@ class DataLogger extends React.Component {
   }
 
   dateChange(e, date) {
-    this.setState({habitTime: date});
+    this.setState({ habitTime: date });
   }
 
   quantityChange(e) {
@@ -56,13 +56,13 @@ class DataLogger extends React.Component {
     because it messes up the chart.
   */
   checkDupe() {
-    let occurrences = this.props.occurrences;
-    let habit = this.state.currentHabit;
-    let time = JSON.parse(JSON.stringify(this.state.habitTime));
-    let quantity = this.state.quantity;
+    const occurrences = this.props.occurrences;
+    const habit = this.state.currentHabit;
+    const time = JSON.parse(JSON.stringify(this.state.habitTime));
+    const quantity = this.state.quantity;
     let found = false;
 
-    occurrences.forEach(item => {
+    occurrences.forEach((item) => {
       if (item.timestamp.slice(0, 10) === time.slice(0, 10)) {
         found = true;
       }
@@ -84,19 +84,19 @@ class DataLogger extends React.Component {
         margin: '0 auto',
         textAlign: 'center',
         display: 'inline-block',
-        position: 'relative'
+        position: 'relative',
       },
       logButton: {
         margin: 10,
         position: 'absolute',
         bottom: '50px',
-        left: '10px'
+        left: '10px',
       },
       createHButton: {
         margin: 10,
         position: 'absolute',
         bottom: '50px',
-        right: '10px'
+        right: '10px',
       },
       deleteButton: {
         margin: 10,
@@ -105,8 +105,8 @@ class DataLogger extends React.Component {
         right: '10px',
       },
       appBar: {
-        textAlign: 'center'
-      }
+        textAlign: 'center',
+      },
     };
     return (
       <div className="dataLogger">
@@ -117,36 +117,39 @@ class DataLogger extends React.Component {
             floatingLabelText="Select Habit"
             value={this.state.value}
             errorText={this.props.errorText}
-            onChange={this.habitChange}>
-            {this.props.habits.map( (event, index) => {
-              return <MenuItem key={index} value={index} primaryText={event} />
-            })}
+            onChange={this.habitChange}
+          >
+            {this.props.habits.map((event, index) => <MenuItem key={index} value={index} primaryText={event} />)}
           </SelectField>
           <br />
 
-          <DatePicker autoOk={true}
-                      hintText="Select Date"
-                      container="inline"
-                      mode="landscape"
-                      value={this.state.habitTime}
-                      onChange={ (x, day) => this.dateChange(x,day) } />
+          <DatePicker
+            autoOk
+            hintText="Select Date"
+            container="inline"
+            mode="landscape"
+            value={this.state.habitTime}
+            onChange={(x, day) => this.dateChange(x, day)}
+          />
 
-          <TextField type="number"
-                     min="0"
-                     hintText="How many?"
-                     errorText={this.props.errorText}
-                     onChange={this.quantityChange} />
+          <TextField
+            type="number"
+            min="0"
+            hintText="How many?"
+            errorText={this.props.errorText}
+            onChange={this.quantityChange}
+          />
           <br />
 
-          <RaisedButton label="Log!" primary={true} onClick={this.checkDupe} style={style.logButton} />
+          <RaisedButton label="Log!" primary onClick={this.checkDupe} style={style.logButton} />
           <RaisedButton label="Create new habit" primary={false} onClick={this.props.changeCreateHabitView} style={style.createHButton} />
           <br />
           {this.state.currentHabit ?
-            <RaisedButton label="Delete this habit" primary={true} onClick={this.props.deleteHabit} style={style.deleteButton} />
+            <RaisedButton label="Delete this habit" primary onClick={this.props.deleteHabit} style={style.deleteButton} />
             : null}
         </Paper>
       </div>
-    )
+    );
   }
 }
 

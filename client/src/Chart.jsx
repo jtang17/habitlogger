@@ -1,5 +1,5 @@
 import React from 'react';
-import {Line} from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import Social from './socialSharing.jsx';
 import moment from 'moment';
 import Paper from 'material-ui/Paper';
@@ -19,20 +19,19 @@ class Chart extends React.Component {
   getLastXOccurrences(entries, x = 15) {
     if (entries.length > x) {
       return entries.slice(entries.length - x);
-    } else {
-      return entries;
     }
+    return entries;
   }
 
   // getting data to be displayed on chart (Y Axis)
   compileEntryValues(entries) {
-    let day1 = undefined;
-    let xDay = undefined;
-    let timeframe = 0;
+    let day1;
+    let xDay;
+    const timeframe = 0;
     const dayInMill = 24 * 3600 * 1000;
     entries = this.getLastXOccurrences(entries);
 
-    let arr = entries.map((entry) => {
+    const arr = entries.map((entry) => {
       if (!day1) {
         day1 = Date.parse(entry.timestamp);
         xDay = 0;
@@ -66,25 +65,25 @@ class Chart extends React.Component {
           pointRadius: 1,
           pointHitRadius: 10,
           data: arr,
-         }
-      ]
+        },
+      ],
     };
     this._options = {
       scales: {
         yAxes: [{
           ticks: {
             beginAtZero: true,
-          }
+          },
         }],
         xAxes: [{
           type: 'linear',
           ticks: {
-             suggestedMin: 0,
-             suggestedMax: this._maxDate,
-             stepSize: this._maxDate / 10 //interval between ticks
-          }
-       }]
-      }
+            suggestedMin: 0,
+            suggestedMax: this._maxDate,
+            stepSize: this._maxDate / 10, // interval between ticks
+          },
+        }],
+      },
     };
   }
 
@@ -92,8 +91,8 @@ class Chart extends React.Component {
     this.compileEntryValues(this.props.occurrences);
     const style = {
       appBar: {
-        textAlign: 'center'
-      }
+        textAlign: 'center',
+      },
     };
     return (
       <div id="chart">
@@ -101,7 +100,7 @@ class Chart extends React.Component {
           <AppBar title={`${this.props.habit} over the past ${this._maxDay} days`} style={style.appBar} showMenuIconButton={false} />
           <p>Share your progress!</p>
           <Social />
-          <Line data={this.data} options={this._options}/>
+          <Line data={this.data} options={this._options} />
         </Paper>
       </div>
     );

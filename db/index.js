@@ -140,7 +140,9 @@ const logOccurrence = (logData, cb) => {
       // Once found, we log the occurrence to that habit.
       userEntry.habits.forEach((habitEntry) => {
         if (logData.habit === habitEntry.habit) {
-          let { timeframe, totalPoints, limit, occurrences } = habitEntry;
+          const {
+            timeframe, totalPoints, limit, occurrences,
+          } = habitEntry;
           occurrences.push(logData.occurrence);
           // update the points of the user
           habitEntry.totalPoints = game.updatePoints(timeframe, limit, occurrences, 0);
