@@ -34,14 +34,14 @@ const Social = () => (
   <div style={style.container}>
     <FacebookShareButton
       style={style.social}
-      quote="Check out my habit progress on reHabit!"
+      quote="Check out my habit progress on HabitLogger!"
       url={window.location.href}
     >
       <FacebookIcon size={32} round />
     </FacebookShareButton>
     <TwitterShareButton
       style={style.social}
-      title="Check out my habit progress on reHabit!"
+      title="Check out my habit progress on HabitLogger!"
       url={window.location.href}
     >
       <TwitterIcon size={32} round />
@@ -51,14 +51,14 @@ const Social = () => (
     </GooglePlusShareButton>
     <LinkedinShareButton
       style={style.social}
-      description="Check out my habit progress on reHabit!"
+      description="Check out my habit progress on HabitLogger!"
       url={window.location.href}
     >
       <LinkedinIcon size={32} round />
     </LinkedinShareButton>
     <EmailShareButton
       style={style.social}
-      subject="Check out my habit progress on reHabit!"
+      subject="Check out my habit progress on HabitLogger!"
       url={window.location.href}
     >
       <EmailIcon size={32} round />
