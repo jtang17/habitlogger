@@ -46,7 +46,7 @@ class Chart extends React.Component {
     this.data = {
       datasets: [
         {
-          label: this.props.unit,
+          label: this.props.unit ? this.props.unit : 'Units',
           fill: false,
           lineTension: 0.1,
           backgroundColor: '#3D5AFE',
@@ -97,7 +97,7 @@ class Chart extends React.Component {
     return (
       <div id="chart">
         <Paper zDepth={1}>
-          <AppBar title={`${this.props.habit} over the past ${this._maxDay} days`} style={style.appBar} showMenuIconButton={false} />
+          <AppBar title={this._maxDay ? `${this.props.habit} over the past ${this._maxDay} days` : 'Habit Progress'} style={style.appBar} showMenuIconButton={false} />
           <p>Share your progress!</p>
           <Social />
           <Line data={this.data} options={this._options} />
