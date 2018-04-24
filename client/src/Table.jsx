@@ -1,5 +1,9 @@
 import React from 'react';
 import UpdateDelete from './UpdateDelete.jsx';
+import moment from 'moment';
+import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import {
   Table,
   TableBody,
@@ -8,9 +12,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-import moment from 'moment';
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
+
 
 const style = {
   paper: {
@@ -86,10 +88,20 @@ class MuiTable extends React.Component {
     return (
       <div className="table">
         <Paper style={style.paper} zDepth={1}>
-          <h1 className="tableName">You are {article} {this.props.ranking} at {this.props.habit}</h1>
-          <h3 className="pointDisplay">You have earned {this.props.totalPoints} points!</h3>
-          <h3 className="limitInfo">You set your goal to {this.props.limit} {this.props.unit} per {this.props.timeframe}</h3>
-          <Table height={this.state.height} width={this.state.width} onRowSelection={this.handleRowSelection}>
+          <h1 className="tableName">
+            You are {article} {this.props.ranking} at {this.props.habit}
+          </h1>
+          <h3 className="pointDisplay">
+            You have earned {this.props.totalPoints} points!
+          </h3>
+          <h3 className="limitInfo">
+            You set your goal to {this.props.limit} {this.props.unit} per {this.props.timeframe}
+          </h3>
+          <Table
+            height={this.state.height}
+            width={this.state.width}
+            onRowSelection={this.handleRowSelection}
+          >
             <TableHeader displaySelectAll={false}>
               <TableRow>
                 <TableHeaderColumn>Date</TableHeaderColumn>

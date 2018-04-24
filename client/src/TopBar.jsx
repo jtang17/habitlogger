@@ -24,16 +24,4 @@ class TopBar extends React.Component {
   }
 }
 
-class DefaultMenu extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <FlatButton style={{ color: 'white' }} label="Signout" onClick={this.props.logout} />
-    );
-  }
-}
-
 export default TopBar;
