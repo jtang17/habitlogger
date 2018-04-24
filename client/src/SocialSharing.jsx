@@ -4,7 +4,7 @@ import {
   ShareCounts,
   generateShareIcon,
 } from 'react-share';
-
+//lower case?
 const style = {
   container: {
     display: 'flex',
